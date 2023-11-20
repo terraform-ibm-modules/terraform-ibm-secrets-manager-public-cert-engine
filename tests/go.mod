@@ -1,4 +1,4 @@
-module github.com/terraform-ibm-modules/secrets-manager-public-cert-engine
+module github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine
 
 go 1.21
 
