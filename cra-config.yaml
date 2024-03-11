@@ -5,6 +5,7 @@ CRA_TARGETS:
     CRA_IGNORE_RULES_FILE: "cra-tf-validate-ignore-rules.json" # CRA Ignore file to use. If not provided, it checks the repo root directory for `cra-tf-validate-ignore-rules.json`
     CRA_ENVIRONMENT_VARIABLES:
       TF_VAR_cis_id: "crn:v1:bluemix:public:internet-svcs:global:a/abac0df06b644a9cabc6e44f55b3880e:59aa1a88-ac47-45e4-bd96-2bc778d26ca7::"
+      TF_VAR_acme_letsencrypt_private_key: "DUMMY VALUE FOR CRA"
     # CRA_ENVIRONMENT_VARIABLES:  # An optional map of environment variables for CRA, where the key is the variable name and value is the value. Useful for providing TF_VARs.
     #   TF_VAR_sample: "sample value"
     #   TF_VAR_other:  "another value"
