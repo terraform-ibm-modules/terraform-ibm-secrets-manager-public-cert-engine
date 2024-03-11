@@ -41,6 +41,9 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 		ResourceGroup: resourceGroup,
 		TerraformVars: map[string]interface{}{
 			"cis_id": permanentResources["cisInstanceId"],
+			"private_key_secrets_manager_instance_guid": permanentResources["acme_letsencrypt_private_key_sm_id"],
+			"private_key_secrets_manager_secret_id":     permanentResources["acme_letsencrypt_private_key_secret_id"],
+			"private_key_secrets_manager_region":        permanentResources["acme_letsencrypt_private_key_sm_region"],
 		},
 		BestRegionYAMLPath: "../common-dev-assets/common-go-assets/cloudinfo-region-secmgr-prefs.yaml",
 	})

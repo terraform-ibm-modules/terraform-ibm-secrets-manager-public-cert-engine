@@ -4,6 +4,13 @@ variable "ibmcloud_api_key" {
   sensitive   = true
 }
 
+variable "ibmcloud_secret_store_api_key" {
+  type        = string
+  description = "The IBM Cloud API token when the private key secrets manager is in a different account"
+  sensitive   = true
+  default     = null
+}
+
 variable "prefix" {
   type        = string
   description = "Prefix for sm instance"

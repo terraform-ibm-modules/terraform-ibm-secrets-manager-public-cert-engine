@@ -34,8 +34,16 @@ module "secrets_manager_secret_group" {
   secret_group_description = "secret group used for public certificates" #tfsec:ignore:general-secrets-no-plaintext-exposure
 }
 
+locals {
+  ibmcloud_secret_store_api_key = var.ibmcloud_secret_store_api_key == null ? var.ibmcloud_api_key : var.ibmcloud_secret_store_api_key
+}
+
 module "public_secret_engine" {
-  source                                    = "../.."
+  source = "../.."
+  providers = {
+    ibm              = ibm
+    ibm.secret-store = ibm.secret-store
+  }
   secrets_manager_guid                      = module.secrets_manager.secrets_manager_guid
   region                                    = var.region
   internet_services_crn                     = var.cis_id

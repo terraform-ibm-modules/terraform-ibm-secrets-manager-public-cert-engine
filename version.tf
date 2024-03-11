@@ -3,8 +3,9 @@ terraform {
   required_providers {
     # Use "greater than or equal to" range in modules
     ibm = {
-      source  = "IBM-Cloud/ibm"
-      version = ">= 1.54.0, < 2.0.0"
+      source                = "IBM-Cloud/ibm"
+      version               = ">= 1.54.0, < 2.0.0"
+      configuration_aliases = [ibm, ibm.secret-store]
     }
     time = {
       source  = "hashicorp/time"
