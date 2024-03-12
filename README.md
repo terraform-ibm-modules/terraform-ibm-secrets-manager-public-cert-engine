@@ -25,14 +25,6 @@ Make sure that you have the following prerequisites:
 
 :information_source: **Tip:** The [Secrets Manager module](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager) provides automation to create a Secret Manager instance.
 
-## Compliance and security
-This module implements the following NIST controls on the network layer. For more information about how this module implements the controls in the following list, see [NIST controls](docs/controls.md).
-
-|Profile|Category|ID|Description|
-|---|---|---|---|
-|NIST|IA-5|IA-5(g)| Protecting authenticator content from unauthorized disclosure and modification.|
-
-
 <!-- Below content is automatically populated via pre-commit hook -->
 <!-- BEGIN OVERVIEW HOOK -->
 ## Overview
