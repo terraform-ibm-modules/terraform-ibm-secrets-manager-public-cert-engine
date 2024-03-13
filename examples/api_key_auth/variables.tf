@@ -59,14 +59,11 @@ variable "dns_provider_name" {
   default     = "certificate-dns"
 }
 
-# TODO: Uncomment the following block once the certificate module is published
-# This is necessary due to circular dependency between modules
-
-#variable "cert_common_name" {
-#  type        = string
-#  description = "Certificate common name, is the domain name to be secured by the certificate"
-#  default     = null
-#}
+variable "cert_common_name" {
+  type        = string
+  description = "Certificate common name, is the domain name to be secured by the certificate"
+  default     = null
+}
 
 variable "private_key_secrets_manager_instance_guid" {
   type        = string

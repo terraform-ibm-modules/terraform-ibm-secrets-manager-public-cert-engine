@@ -1,10 +1,7 @@
-# TODO: Uncomment the following block once the certificate module is published
-# This is necessary due to circular dependency between modules
-
-#locals {
-# Certificate issuance is rate limited by domain, by default pick different domains to avoid rate limits during testing
-#  cert_common_name = var.cert_common_name == null ? "${var.prefix}.goldeneye.dev.cloud.ibm.com" : var.cert_common_name
-#}
+locals {
+  # Certificate issuance is rate limited by domain, by default pick different domains to avoid rate limits during testing
+  cert_common_name = var.cert_common_name == null ? "${var.prefix}.goldeneye.dev.cloud.ibm.com" : var.cert_common_name
+}
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
@@ -55,22 +52,20 @@ module "public_secret_engine" {
   private_key_secrets_manager_region        = var.private_key_secrets_manager_region
 }
 
-# TODO: Uncomment the following block once the certificate module is published
-# This is necessary due to circular dependency between modules
+module "secrets_manager_public_certificate" {
+  source = "git::https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert.git?ref=init"
+  #source               = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
+  #version              = "1.0.0"
+  depends_on = [module.public_secret_engine]
 
-#module "secrets_manager_public_certificate" {
-#  source               = "terraform-ibm-modules/secrets-manager-public-cert-engine/ibm"
-#  version              = "1.0.0"
-#  depends_on = [module.public_secret_engine]
-#
-#  cert_common_name      = local.cert_common_name
-#  cert_description      = "Certificate for ${local.cert_common_name} domain"
-#  cert_name             = "${var.prefix}-public-cert"
-#  cert_secrets_group_id = module.secrets_manager_secret_group.secret_group_id
-#
-#  secrets_manager_ca_name           = var.ca_name
-#  secrets_manager_dns_provider_name = var.dns_provider_name
-#
-#  secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
-#  secrets_manager_region = var.region
-#}
+  cert_common_name      = local.cert_common_name
+  cert_description      = "Certificate for ${local.cert_common_name} domain"
+  cert_name             = "${var.prefix}-public-cert"
+  cert_secrets_group_id = module.secrets_manager_secret_group.secret_group_id
+
+  secrets_manager_ca_name           = var.ca_name
+  secrets_manager_dns_provider_name = var.dns_provider_name
+
+  secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
+  secrets_manager_region = var.region
+}

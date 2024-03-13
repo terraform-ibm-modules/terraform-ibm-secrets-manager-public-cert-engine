@@ -51,7 +51,7 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 	return options
 }
 
-func TestRunDefaultExample(t *testing.T) {
+func TestRunAPIKeyExample(t *testing.T) {
 	t.Parallel()
 
 	options := setupOptions(t, "sm-public-cert-eng", keyExampleTerraformDir)
