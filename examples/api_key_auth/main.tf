@@ -58,9 +58,8 @@ module "public_secret_engine" {
 # This is necessary due to circular dependency between modules
 
 module "secrets_manager_public_certificate" {
-  source = "git::https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert.git?ref=init"
-  #source               = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
-  #version              = "1.0.0"
+  source     = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
+  version    = "1.0.0"
   depends_on = [module.public_secret_engine]
 
   cert_common_name      = local.cert_common_name
