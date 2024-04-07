@@ -54,7 +54,7 @@ module "public_secret_engine" {
 
 module "secrets_manager_public_certificate" {
   source     = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
-  version    = "1.0.0"
+  version    = "1.0.1"
   depends_on = [module.public_secret_engine]
 
   cert_common_name      = local.cert_common_name
