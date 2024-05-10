@@ -51,6 +51,12 @@ https://terraform-ibm-modules.github.io/documentation/#/implementation-guideline
 ### Usage
 
 ```hcl
+# Provider aliases
+providers = {
+    ibm              = ibm
+    ibm.secret-store = ibm
+}
+
 # Authentication with IAM policy
 module "public_secret_engine" {
   source                       = "terraform-ibm-modules/secrets-manager-public-cert-engine/ibm"
