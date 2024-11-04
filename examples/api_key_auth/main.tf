@@ -19,6 +19,8 @@ module "secrets_manager" {
   secrets_manager_name = "${var.prefix}-secrets-manager" #tfsec:ignore:general-secrets-no-plaintext-exposure
   sm_service_plan      = "trial"
   sm_tags              = var.resource_tags
+  allowed_network      = "private-only"
+  endpoint_type        = "private"
 }
 
 # Best practise, use the secrets manager secret group module to create a secret group
@@ -29,6 +31,7 @@ module "secrets_manager_secret_group" {
   secrets_manager_guid     = module.secrets_manager.secrets_manager_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"   #checkov:skip=CKV_SECRET_6: does not require high entropy string as is static value
   secret_group_description = "secret group used for public certificates" #tfsec:ignore:general-secrets-no-plaintext-exposure
+  endpoint_type            = "private"
 }
 
 locals {
@@ -52,6 +55,7 @@ module "public_secret_engine" {
   private_key_secrets_manager_instance_guid = var.private_key_secrets_manager_instance_guid
   private_key_secrets_manager_secret_id     = var.private_key_secrets_manager_secret_id
   private_key_secrets_manager_region        = var.private_key_secrets_manager_region
+  service_endpoints                         = "private"
 }
 
 # TODO: Uncomment the following block once the certificate module is published
@@ -72,4 +76,6 @@ module "secrets_manager_public_certificate" {
 
   secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
   secrets_manager_region = var.region
+
+  service_endpoints = "private"
 }

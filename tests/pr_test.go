@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
 
 // Define a struct with fields that match the structure of the YAML data
@@ -21,6 +22,7 @@ const resourceGroup = "geretain-test-sm-pub-cert-eng"
 
 const keyExampleTerraformDir = "examples/api_key_auth"
 const IAMExampleTerraformDir = "examples/iam_auth"
+const bestRegionYAMLPath = "../common-dev-assets/common-go-assets/cloudinfo-region-secmgr-prefs.yaml"
 
 // TestMain will be run before any parallel tests, used to read data from yaml for use with tests
 func TestMain(m *testing.M) {
@@ -45,20 +47,43 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 			"private_key_secrets_manager_secret_id":     permanentResources["acme_letsencrypt_private_key_secret_id"],
 			"private_key_secrets_manager_region":        permanentResources["acme_letsencrypt_private_key_sm_region"],
 		},
-		BestRegionYAMLPath: "../common-dev-assets/common-go-assets/cloudinfo-region-secmgr-prefs.yaml",
+		BestRegionYAMLPath: bestRegionYAMLPath,
 	})
 
 	return options
 }
 
-func TestRunAPIKeyExample(t *testing.T) {
+func TestPrivateInSchematics(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "sm-public-cert-eng", keyExampleTerraformDir)
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Prefix:  "sm-pub-crt-eng-prv",
+		TarIncludePatterns: []string{
+			"*.tf",
+			keyExampleTerraformDir + "/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		TemplateFolder:         keyExampleTerraformDir,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 80,
+		BestRegionYAMLPath:     bestRegionYAMLPath,
+	})
 
-	output, err := options.RunTestConsistency()
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "resource_tags", Value: options.Tags, DataType: "list(string)"},
+		{Name: "region", Value: options.Region, DataType: "string"},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "cis_id", Value: permanentResources["cisInstanceId"], DataType: "string"},
+		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
+		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
+		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+	}
+
+	err := options.RunSchematicTest()
 	assert.Nil(t, err, "This should not have errored")
-	assert.NotNil(t, output, "Expected some output")
 }
 
 func TestRunIAMExample(t *testing.T) {
