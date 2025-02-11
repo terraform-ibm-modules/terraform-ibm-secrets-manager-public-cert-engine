@@ -29,6 +29,18 @@ variable "resource_group" {
   default     = null
 }
 
+variable "existing_sm_instance_crn" {
+  type        = string
+  description = "Existing Secrets Manager CRN. If not provided a new instance will be provisioned"
+  default     = null
+}
+
+variable "existing_sm_instance_region" {
+  type        = string
+  description = "Existing Secrets Manager Region. Required if value is passed into var.existing_sm_instance_name"
+  default     = null
+}
+
 variable "cis_id" {
   type        = string
   description = "Cloud Internet Service ID"

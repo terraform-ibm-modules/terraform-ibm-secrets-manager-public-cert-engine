@@ -1,6 +1,16 @@
 locals {
   # Certificate issuance is rate limited by domain, by default pick different domains to avoid rate limits during testing
-  cert_common_name = var.cert_common_name == null ? "${var.prefix}.goldeneye.dev.cloud.ibm.com" : var.cert_common_name
+  cert_common_name       = var.cert_common_name == null ? "${var.prefix}.goldeneye.dev.cloud.ibm.com" : var.cert_common_name
+  validate_sm_region_cnd = var.existing_sm_instance_crn != null && var.existing_sm_instance_region == null
+  validate_sm_region_msg = "existing_sm_instance_region must also be set when value given for existing_sm_instance_crn."
+  # tflint-ignore: terraform_unused_declarations
+  validate_sm_region_chk = regex(
+    "^${local.validate_sm_region_msg}$",
+    (!local.validate_sm_region_cnd
+      ? local.validate_sm_region_msg
+  : ""))
+
+  sm_region = var.existing_sm_instance_region == null ? var.region : var.existing_sm_instance_region
 }
 
 module "resource_group" {
@@ -12,22 +22,23 @@ module "resource_group" {
 }
 
 module "secrets_manager" {
-  source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "1.23.1"
-  resource_group_id    = module.resource_group.resource_group_id
-  region               = var.region
-  secrets_manager_name = "${var.prefix}-secrets-manager" #tfsec:ignore:general-secrets-no-plaintext-exposure
-  sm_service_plan      = "trial"
-  sm_tags              = var.resource_tags
-  allowed_network      = "private-only"
-  endpoint_type        = "private"
+  source                   = "terraform-ibm-modules/secrets-manager/ibm"
+  version                  = "1.23.1"
+  existing_sm_instance_crn = var.existing_sm_instance_crn
+  resource_group_id        = module.resource_group.resource_group_id
+  region                   = local.sm_region
+  secrets_manager_name     = "${var.prefix}-secrets-manager" #tfsec:ignore:general-secrets-no-plaintext-exposure
+  sm_service_plan          = "trial"
+  sm_tags                  = var.resource_tags
+  allowed_network          = "private-only"
+  endpoint_type            = "private"
 }
 
 # Best practise, use the secrets manager secret group module to create a secret group
 module "secrets_manager_secret_group" {
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
   version                  = "1.2.2"
-  region                   = var.region
+  region                   = local.sm_region
   secrets_manager_guid     = module.secrets_manager.secrets_manager_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"   #checkov:skip=CKV_SECRET_6: does not require high entropy string as is static value
   secret_group_description = "secret group used for public certificates" #tfsec:ignore:general-secrets-no-plaintext-exposure
@@ -46,7 +57,7 @@ module "public_secret_engine" {
   }
   depends_on                                = [module.secrets_manager] # Required to wait for instance to fully start
   secrets_manager_guid                      = module.secrets_manager.secrets_manager_guid
-  region                                    = var.region
+  region                                    = local.sm_region
   ibmcloud_cis_api_key                      = var.ibmcloud_api_key # key with manager authorization to CIS
   internet_services_crn                     = var.cis_id
   dns_config_name                           = var.dns_provider_name
@@ -75,7 +86,7 @@ module "secrets_manager_public_certificate" {
   secrets_manager_dns_provider_name = var.dns_provider_name
 
   secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
-  secrets_manager_region = var.region
+  secrets_manager_region = local.sm_region
 
   service_endpoints = "private"
 }

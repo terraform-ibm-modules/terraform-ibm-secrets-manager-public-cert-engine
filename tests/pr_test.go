@@ -46,6 +46,8 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 			"private_key_secrets_manager_instance_guid": permanentResources["acme_letsencrypt_private_key_sm_id"],
 			"private_key_secrets_manager_secret_id":     permanentResources["acme_letsencrypt_private_key_secret_id"],
 			"private_key_secrets_manager_region":        permanentResources["acme_letsencrypt_private_key_sm_region"],
+			"existing_sm_instance_guid":                 permanentResources["secretsManagerGuid"],
+			"existing_sm_instance_region":               permanentResources["secretsManagerRegion"],
 		},
 		BestRegionYAMLPath: bestRegionYAMLPath,
 	})
