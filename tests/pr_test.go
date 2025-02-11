@@ -46,8 +46,6 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 			"private_key_secrets_manager_instance_guid": permanentResources["acme_letsencrypt_private_key_sm_id"],
 			"private_key_secrets_manager_secret_id":     permanentResources["acme_letsencrypt_private_key_secret_id"],
 			"private_key_secrets_manager_region":        permanentResources["acme_letsencrypt_private_key_sm_region"],
-			"existing_sm_instance_guid":                 permanentResources["secretsManagerGuid"],
-			"existing_sm_instance_region":               permanentResources["secretsManagerRegion"],
 		},
 		BestRegionYAMLPath: bestRegionYAMLPath,
 	})
@@ -82,6 +80,8 @@ func TestPrivateInSchematics(t *testing.T) {
 		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+		{Name: "existing_sm_instance_crn", Value: permanentResources["privateOnlySecMgrCRN"], DataType: "string"},
+		{Name: "existing_sm_instance_region", Value: permanentResources["privateOnlySecMgrRegion"], DataType: "string"},
 	}
 
 	err := options.RunSchematicTest()
