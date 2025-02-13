@@ -35,12 +35,6 @@ variable "existing_sm_instance_crn" {
   default     = null
 }
 
-variable "existing_sm_instance_region" {
-  type        = string
-  description = "Existing Secrets Manager Region. Required if value is passed into var.existing_sm_instance_name"
-  default     = null
-}
-
 variable "cis_id" {
   type        = string
   description = "Cloud Internet Service ID"
