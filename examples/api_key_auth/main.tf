@@ -1,6 +1,8 @@
 locals {
   # Certificate issuance is rate limited by domain, by default pick different domains to avoid rate limits during testing
   cert_common_name = var.cert_common_name == null ? "${var.prefix}.goldeneye.dev.cloud.ibm.com" : var.cert_common_name
+  sm_guid          = var.existing_sm_instance_crn == null ? module.secrets_manager[0].secrets_manager_guid : module.existing_sm_crn_parser[0].service_instance
+  sm_region        = var.existing_sm_instance_crn == null ? var.region : module.existing_sm_crn_parser[0].region
 }
 
 module "resource_group" {
@@ -11,7 +13,15 @@ module "resource_group" {
   existing_resource_group_name = var.resource_group
 }
 
+module "existing_sm_crn_parser" {
+  count   = var.existing_sm_instance_crn == null ? 0 : 1
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.1.0"
+  crn     = var.existing_sm_instance_crn
+}
+
 module "secrets_manager" {
+  count                = var.existing_sm_instance_crn == null ? 1 : 0
   source               = "terraform-ibm-modules/secrets-manager/ibm"
   version              = "1.23.3"
   resource_group_id    = module.resource_group.resource_group_id
@@ -27,8 +37,8 @@ module "secrets_manager" {
 module "secrets_manager_secret_group" {
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
   version                  = "1.2.2"
-  region                   = var.region
-  secrets_manager_guid     = module.secrets_manager.secrets_manager_guid
+  region                   = local.sm_region
+  secrets_manager_guid     = local.sm_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"   #checkov:skip=CKV_SECRET_6: does not require high entropy string as is static value
   secret_group_description = "secret group used for public certificates" #tfsec:ignore:general-secrets-no-plaintext-exposure
   endpoint_type            = "private"
@@ -45,8 +55,8 @@ module "public_secret_engine" {
     ibm.secret-store = ibm.secret-store
   }
   depends_on                                = [module.secrets_manager] # Required to wait for instance to fully start
-  secrets_manager_guid                      = module.secrets_manager.secrets_manager_guid
-  region                                    = var.region
+  secrets_manager_guid                      = local.sm_guid
+  region                                    = local.sm_region
   ibmcloud_cis_api_key                      = var.ibmcloud_api_key # key with manager authorization to CIS
   internet_services_crn                     = var.cis_id
   dns_config_name                           = var.dns_provider_name
@@ -74,8 +84,8 @@ module "secrets_manager_public_certificate" {
   secrets_manager_ca_name           = var.ca_name
   secrets_manager_dns_provider_name = var.dns_provider_name
 
-  secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
-  secrets_manager_region = var.region
+  secrets_manager_guid   = local.sm_guid
+  secrets_manager_region = local.sm_region
 
   service_endpoints = "private"
 }
