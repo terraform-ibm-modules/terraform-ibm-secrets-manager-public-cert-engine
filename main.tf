@@ -4,7 +4,7 @@ data "ibm_iam_account_settings" "iam_account_settings" {
 
 locals {
   create_access_policy_cis = !var.skip_iam_authorization_policy && var.dns_config_name != null && var.ibmcloud_cis_api_key == null
-  cis_account_id = var.cis_account_id != null ? var.cis_account_id : data.ibm_iam_account_settings.iam_account_settings.account_id
+  cis_account_id           = var.cis_account_id != null ? var.cis_account_id : data.ibm_iam_account_settings.iam_account_settings.account_id
 }
 
 resource "ibm_iam_authorization_policy" "cis_service_authorization" {

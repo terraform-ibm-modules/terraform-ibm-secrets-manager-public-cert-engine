@@ -26,7 +26,7 @@ variable "internet_services_crn" {
   default     = null
 
   validation {
-    condition = var.dns_config_name != null ? var.internet_services_crn != null : true
+    condition     = var.dns_config_name != null ? var.internet_services_crn != null : true
     error_message = "A value for 'internet_services_crn' must be passed to create a DNS config for public_cert secrets engine"
   }
 }
@@ -68,7 +68,7 @@ variable "acme_letsencrypt_private_key" {
   sensitive   = true
 
   validation {
-    condition = var.ca_config_name != null ? var.acme_letsencrypt_private_key == null ? (var.private_key_secrets_manager_instance_guid != null && var.private_key_secrets_manager_secret_id != null) : true : true
+    condition     = var.ca_config_name != null ? var.acme_letsencrypt_private_key == null ? (var.private_key_secrets_manager_instance_guid != null && var.private_key_secrets_manager_secret_id != null) : true : true
     error_message = "A value for 'acme_letsencrypt_private_key' must be provided, or both `private_key_secrets_manager_instance_guid` and `private_key_secrets_manager_secret_id` must be provided to pull the private key to create a CA config for public_cert secrets engine."
   }
 }
