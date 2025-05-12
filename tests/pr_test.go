@@ -109,3 +109,65 @@ func TestRunUpgradeExample(t *testing.T) {
 		assert.NotNil(t, output, "Expected some output")
 	}
 }
+
+func TestRunSolutionsStandardSchematics(t *testing.T) {
+	t.Parallel()
+
+	const testLocation = "solutions/standard"
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Prefix:  "sm-pbce",
+		TarIncludePatterns: []string{
+			"*.tf",
+			testLocation + "/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		TemplateFolder:         testLocation,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 80,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
+		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
+		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
+		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+	}
+
+	err := options.RunSchematicTest()
+	assert.Nil(t, err, "This should not have errored")
+}
+
+func TestRunSolutionsStandardUpgradeSchematics(t *testing.T) {
+	t.Parallel()
+
+	const testLocation = "solutions/standard"
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Prefix:  "sm-pbce-up",
+		TarIncludePatterns: []string{
+			"*.tf",
+			testLocation + "/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		TemplateFolder:         testLocation,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 80,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
+		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
+		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
+		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+	}
+
+	err := options.RunSchematicUpgradeTest()
+	assert.Nil(t, err, "This should not have errored")
+}

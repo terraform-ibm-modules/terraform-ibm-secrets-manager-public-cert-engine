@@ -20,7 +20,7 @@ module "secrets_manager_public_cert_engine" {
     ibm.secret-store = ibm.secret-store
   }
   secrets_manager_guid                      = local.existing_secrets_manager_guid
-  region                                    = var.region
+  region                                    = local.existing_secrets_manager_region
   ibmcloud_cis_api_key                      = var.ibmcloud_cis_api_key
   internet_services_crn                     = var.internet_services_crn
   cis_account_id                            = var.cis_account_id

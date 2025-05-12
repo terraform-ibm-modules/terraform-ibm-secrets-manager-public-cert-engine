@@ -9,20 +9,9 @@ variable "existing_secrets_manager_crn" {
   description = "CRN of an existing secrets manager instance to create the secret engine in."
 }
 
-variable "region" {
-  type        = string
-  description = "The region to provision resources to."
-  default     = "us-south"
-
-  validation {
-    condition     = var.region != local.existing_secrets_manager_region ? false : true
-    error_message = "The value of the region 'var.region' should be same as the region where the existing secrets manager instance is deployed."
-  }
-}
-
 variable "ibmcloud_cis_api_key" {
   type        = string
-  description = "Optional, when not using IAM authorization, use an API key for CIS DNS configuration"
+  description = "When not using IAM authorization, use an API key for CIS DNS configuration"
   default     = null
   sensitive   = true
 }
@@ -41,7 +30,7 @@ variable "cis_account_id" {
 
 variable "internet_service_domain_id" {
   type        = string
-  description = "(optional) Specific domain in the CIS to authorize Secrets Manager access to."
+  description = "Specific domain in the CIS to authorize Secrets Manager access to."
   default     = null
 }
 
