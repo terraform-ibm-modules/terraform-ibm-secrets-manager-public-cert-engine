@@ -9,22 +9,43 @@ variable "existing_secrets_manager_crn" {
   description = "CRN of an existing secrets manager instance to create the secret engine in."
 }
 
+variable "prefix" {
+  type        = string
+  description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and can not contain consecutive hyphens ('--'). Example: prod-us-south."
+
+  validation {
+    condition = (var.prefix == null ? true :
+      alltrue([
+        can(regex("^[a-z]{0,1}[-a-z0-9]{0,14}[a-z0-9]{0,1}$", var.prefix)),
+        length(regexall("^.*--.*", var.prefix)) == 0
+      ])
+    )
+    error_message = "Prefix must begin with a lowercase letter, contain only lowercase letters, numbers, and '-' characters. It must end with a lowercase letter or number, and be 16 or fewer characters long."
+  }
+
+  validation {
+    # must not exceed 16 characters in length
+    condition     = length(var.prefix) <= 16
+    error_message = "Prefix must not exceed 16 characters."
+  }
+}
+
 variable "ibmcloud_cis_api_key" {
   type        = string
-  description = "When not using IAM authorization, use an API key for CIS DNS configuration"
+  description = "An API key for CIS DNS configuration which is to be used when not using IAM authorization."
   default     = null
   sensitive   = true
 }
 
 variable "internet_services_crn" {
   type        = string
-  description = "CRN of the CIS instance to authorize Secrets Manager against."
+  description = "The CRN of the CIS instance to authorize Secrets Manager against."
   default     = null
 }
 
 variable "cis_account_id" {
   type        = string
-  description = "Account ID of the CIS instance (only needed if different from Secrets Manager account)"
+  description = "The Account ID of the CIS instance (only needed if different from Secrets Manager account)"
   default     = null
 }
 
@@ -36,14 +57,14 @@ variable "internet_service_domain_id" {
 
 variable "dns_config_name" {
   type        = string
-  description = "Name of the DNS config for the public_cert secrets engine."
-  default     = null
+  description = "Name of the DNS config for the public_cert secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format."
+  default     = "certificate-dns"
 }
 
 variable "ca_config_name" {
   type        = string
-  description = "Name of the CA config for the public_cert secrets engine."
-  default     = null
+  description = "Name of the CA config for the public_cert secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format."
+  default     = "cert-auth"
 }
 
 variable "lets_encrypt_environment" {

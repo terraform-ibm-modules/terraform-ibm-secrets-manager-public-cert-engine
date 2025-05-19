@@ -2,6 +2,10 @@
 # Secrets Manager Public Cert Engine
 ########################################################################################################################
 
+locals {
+  prefix = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
+}
+
 module "crn_parser" {
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.1.0"
@@ -25,8 +29,8 @@ module "secrets_manager_public_cert_engine" {
   internet_services_crn                     = var.internet_services_crn
   cis_account_id                            = var.cis_account_id
   internet_service_domain_id                = var.internet_service_domain_id
-  dns_config_name                           = var.dns_config_name
-  ca_config_name                            = var.ca_config_name
+  dns_config_name                           = "${local.prefix}${var.dns_config_name}"
+  ca_config_name                            = "${local.prefix}${var.ca_config_name}"
   lets_encrypt_environment                  = var.lets_encrypt_environment
   acme_letsencrypt_private_key              = var.acme_letsencrypt_private_key
   service_endpoints                         = "private"

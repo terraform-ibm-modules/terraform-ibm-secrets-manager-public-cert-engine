@@ -22,6 +22,7 @@ const resourceGroup = "geretain-test-sm-pub-cert-eng"
 
 const keyExampleTerraformDir = "examples/api_key_auth"
 const IAMExampleTerraformDir = "examples/iam_auth"
+const fullyConfigurableDir = "solutions/fully-configurable"
 const bestRegionYAMLPath = "../common-dev-assets/common-go-assets/cloudinfo-region-secmgr-prefs.yaml"
 
 // TestMain will be run before any parallel tests, used to read data from yaml for use with tests
@@ -110,20 +111,18 @@ func TestRunUpgradeExample(t *testing.T) {
 	}
 }
 
-func TestRunSolutionsStandardSchematics(t *testing.T) {
+func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 	t.Parallel()
-
-	const testLocation = "solutions/standard"
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing: t,
 		Prefix:  "sm-pbce",
 		TarIncludePatterns: []string{
 			"*.tf",
-			testLocation + "/*.tf",
+			fullyConfigurableDir + "/*.tf",
 		},
 		ResourceGroup:          resourceGroup,
-		TemplateFolder:         testLocation,
+		TemplateFolder:         fullyConfigurableDir,
 		Tags:                   []string{"test-schematic"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 80,
@@ -141,20 +140,18 @@ func TestRunSolutionsStandardSchematics(t *testing.T) {
 	assert.Nil(t, err, "This should not have errored")
 }
 
-func TestRunSolutionsStandardUpgradeSchematics(t *testing.T) {
+func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 	t.Parallel()
-
-	const testLocation = "solutions/standard"
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing: t,
 		Prefix:  "sm-pbce-up",
 		TarIncludePatterns: []string{
 			"*.tf",
-			testLocation + "/*.tf",
+			fullyConfigurableDir + "/*.tf",
 		},
 		ResourceGroup:          resourceGroup,
-		TemplateFolder:         testLocation,
+		TemplateFolder:         fullyConfigurableDir,
 		Tags:                   []string{"test-schematic"},
 		DeleteWorkspaceOnFail:  false,
 		WaitJobCompleteMinutes: 80,
@@ -169,5 +166,7 @@ func TestRunSolutionsStandardUpgradeSchematics(t *testing.T) {
 	}
 
 	err := options.RunSchematicUpgradeTest()
-	assert.Nil(t, err, "This should not have errored")
+	if !options.UpgradeTestSkipped {
+		assert.Nil(t, err, "This should not have errored")
+	}
 }
