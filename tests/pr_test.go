@@ -130,6 +130,7 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
@@ -159,6 +160,7 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 
 	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
