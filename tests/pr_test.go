@@ -135,6 +135,7 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
 	}
 
 	err := options.RunSchematicTest()
@@ -165,6 +166,7 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
 		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
 	}
 
 	err := options.RunSchematicUpgradeTest()
