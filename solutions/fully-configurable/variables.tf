@@ -32,26 +32,26 @@ variable "prefix" {
 
 variable "ibmcloud_cis_api_key" {
   type        = string
-  description = "An API key for CIS DNS configuration which is to be used when not using IAM authorization."
+  description = "If not using IAM authorization, supply an API key for Internet Services DNS configuration."
   default     = null
   sensitive   = true
 }
 
 variable "internet_services_crn" {
   type        = string
-  description = "The CRN of the CIS instance to authorize Secrets Manager against."
+  description = "The CRN of the Internet Service instance to authorize Secrets Manager against."
   default     = null
 }
 
-variable "cis_account_id" {
+variable "internet_services_account_id" {
   type        = string
-  description = "The Account ID of the CIS instance (only needed if different from Secrets Manager account)"
+  description = "The Account ID of the Internet Service instance (only needed if different from Secrets Manager account)"
   default     = null
 }
 
 variable "internet_service_domain_id" {
   type        = string
-  description = "Specific domain in the CIS to authorize Secrets Manager access to."
+  description = "Specific domain in the Internet Service to authorize Secrets Manager access to."
   default     = null
 }
 
@@ -69,7 +69,7 @@ variable "ca_config_name" {
 
 variable "lets_encrypt_environment" {
   type        = string
-  description = "Let's Encrtyp environment (staging, production)"
+  description = "Let's Encrypt environment (staging, production)"
   default     = "production"
 }
 
@@ -86,20 +86,8 @@ variable "skip_iam_authorization_policy" {
   default     = false
 }
 
-variable "private_key_secrets_manager_instance_guid" {
+variable "private_key_secrets_manager_secret_crn" {
   type        = string
-  description = "The Secrets Manager instance GUID of the Secrets Manager containing your ACME private key. Required if acme_letsencrypt_private_key is not set."
-  default     = null
-}
-
-variable "private_key_secrets_manager_secret_id" {
-  type        = string
-  description = "The secret ID of your ACME private key. Required if acme_letsencrypt_private_key is not set. If both are set, this value will be used as the private key."
-  default     = null
-}
-
-variable "private_key_secrets_manager_region" {
-  type        = string
-  description = "The region of the Secrets Manager instance containing your ACME private key. (Only needed if different from the region variable)."
+  description = "The secret CRN of your ACME private key. Required if acme_letsencrypt_private_key is not set. If both are set, this value will be used as the private key."
   default     = null
 }
