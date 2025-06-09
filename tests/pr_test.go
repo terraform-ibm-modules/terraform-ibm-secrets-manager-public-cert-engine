@@ -134,7 +134,7 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 		{Name: "private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
 		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
-		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"},
+		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
 	}
 
 	err := options.RunSchematicTest()
@@ -162,10 +162,9 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
-		{Name: "private_key_secrets_manager_instance_guid", Value: permanentResources["acme_letsencrypt_private_key_sm_id"], DataType: "string"},
-		{Name: "private_key_secrets_manager_secret_id", Value: permanentResources["acme_letsencrypt_private_key_secret_id"], DataType: "string"},
-		{Name: "private_key_secrets_manager_region", Value: permanentResources["acme_letsencrypt_private_key_sm_region"], DataType: "string"},
+		{Name: "private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
 		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
+		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
 	}
 
 	err := options.RunSchematicUpgradeTest()

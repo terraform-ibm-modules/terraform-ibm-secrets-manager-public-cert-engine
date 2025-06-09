@@ -11,16 +11,22 @@ variable "existing_secrets_manager_crn" {
 
 variable "prefix" {
   type        = string
-  description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and can not contain consecutive hyphens ('--'). Example: prod-us-south."
+  nullable    = true
+  description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and can not contain consecutive hyphens ('--'). Example: prod-0205-cos. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/prefix.md)."
 
   validation {
-    condition = (var.prefix == null ? true :
+    # - null and empty string is allowed
+    # - Must not contain consecutive hyphens (--): length(regexall("--", var.prefix)) == 0
+    # - Starts with a lowercase letter: [a-z]
+    # - Contains only lowercase letters (a–z), digits (0–9), and hyphens (-)
+    # - Must not end with a hyphen (-): [a-z0-9]
+    condition = (var.prefix == null || var.prefix == "" ? true :
       alltrue([
-        can(regex("^[a-z]{0,1}[-a-z0-9]{0,14}[a-z0-9]{0,1}$", var.prefix)),
-        length(regexall("^.*--.*", var.prefix)) == 0
+        can(regex("^[a-z][-a-z0-9]*[a-z0-9]$", var.prefix)),
+        length(regexall("--", var.prefix)) == 0
       ])
     )
-    error_message = "Prefix must begin with a lowercase letter, contain only lowercase letters, numbers, and '-' characters. It must end with a lowercase letter or number, and be 16 or fewer characters long."
+    error_message = "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--')."
   }
 
   validation {
@@ -30,16 +36,17 @@ variable "prefix" {
   }
 }
 
+
 variable "ibmcloud_cis_api_key" {
   type        = string
-  description = "If not using IAM authorization, supply an API key for Internet Services DNS configuration."
+  description = "If not using IAM authorization, supply an API key for Internet Services DNS configuration. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)"
   default     = null
   sensitive   = true
 }
 
 variable "internet_services_crn" {
   type        = string
-  description = "The CRN of the Internet Service instance to authorize Secrets Manager against."
+  description = "The CRN of the Internet Service instance to authorize Secrets Manager against. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)"
   default     = null
 }
 
@@ -57,25 +64,30 @@ variable "internet_service_domain_id" {
 
 variable "dns_config_name" {
   type        = string
-  description = "Name of the DNS config for the public_cert secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format."
+  description = "Name of the DNS config for the public_cert secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)"
   default     = "certificate-dns"
 }
 
 variable "ca_config_name" {
   type        = string
-  description = "Name of the CA config for the public_cert secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format."
+  description = "Name of the CA config for the public certificate secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)"
   default     = "cert-auth"
 }
 
 variable "lets_encrypt_environment" {
   type        = string
-  description = "Let's Encrypt environment (staging, production)"
+  description = "Let's Encrypt environment (staging, production). [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)"
   default     = "production"
+
+  validation {
+    condition     = contains(["staging", "production"], var.lets_encrypt_environment)
+    error_message = "lets_encrypt_environment must be either 'staging' or 'production'."
+  }
 }
 
 variable "acme_letsencrypt_private_key" {
   type        = string
-  description = "The private key generated by the ACME account creation tool. Required if private_key_secrets_manager_instance_guid and private_key_secrets_manager_secret_id are not set."
+  description = "The private key generated by the ACME account creation tool. Required if private_key_secrets_manager_secret_crn is not set. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)"
   default     = null
   sensitive   = true
 }
@@ -90,4 +102,12 @@ variable "private_key_secrets_manager_secret_crn" {
   type        = string
   description = "The secret CRN of your ACME private key. Required if acme_letsencrypt_private_key is not set. If both are set, this value will be used as the private key."
   default     = null
+
+  validation {
+    condition = (
+      var.private_key_secrets_manager_secret_crn != null ||
+      var.acme_letsencrypt_private_key != null
+    )
+    error_message = "If `acme_letsencrypt_private_key` is not set, you must provide a value for `private_key_secrets_manager_secret_crn`."
+  }
 }
