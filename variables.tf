@@ -57,7 +57,7 @@ variable "ca_config_name" {
 
 variable "lets_encrypt_environment" {
   type        = string
-  description = "Let's Encrtyp environment (staging, production)"
+  description = "Let's Encrypt environment (staging, production)"
   default     = "production"
 }
 
