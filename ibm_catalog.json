@@ -2,7 +2,7 @@
     "products": [
       {
         "name": "deploy-arch-secrets-manager-public-cert-engine",
-        "label": "Cloud automation for secrets manager public certificates engine",
+        "label": "Cloud automation for Secrets Manager public certificates engine",
         "product_kind": "solution",
         "tags": [
           "ibm_created",
@@ -20,22 +20,22 @@
           "solution"
         ],
         "short_description": "Creates and configures a Secrets Manager Public Certificates Engine.",
-        "long_description" : "This deployable architecture is used to configure an Internet Service DNS configuration, authorization between Secrets Manager and Internet Service and Let's Encrypt certificate authority configuration. This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) asset collection, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
+        "long_description" : "This deployable architecture is used to configure an Internet Service DNS configuration, establish authorization between Secrets Manager and the Internet Service, and set up Let's Encrypt as the certificate authority. This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) asset collection, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [Automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
         "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/blob/main/README.md",
         "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/images/secrets_manager_public_cert_engine.svg",
         "provider_name": "IBM",
         "features": [
           {
             "title": "Configures Internet Service DNS",
-            "description": "Configures Internet Service DNS"
+            "description": "Configures Internet Service DNS."
           },
           {
             "title": "Creates Secrets Manager Internet Service authorization",
-            "description": "Creates authorization between Secrets Manager and Internet Service"
+            "description": "Creates authorization between Secrets Manager and Internet Service."
           },
           {
             "title": "Configures Let's Encrypt certificate authority",
-            "description": "Configures Let's Encrypt certificate authority"
+            "description": "Configures Let's Encrypt certificate authority."
           }
         ],
         "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/issues](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
@@ -49,16 +49,16 @@
               "descriptions": "This architecture supports creating and configuring a Secrets Manager Public Certificates Engine.",
               "features": [
                 {
-                  "title": "Configuring an Internet Service DNS configuration",
-                  "description": "Yes"
+                  "title": "Internet Service DNS",
+                  "description": "Configures Internet Service DNS configuration."
                 },
                 {
                   "title": "Authorization between Secrets Manager and Internet Service",
-                  "description": "Yes"
+                  "description": "Creates authorization between Secrets Manager and Internet Service."
                 },
                 {
-                  "title": "Provisions a Let's Encrypt certificate authority",
-                  "description": "Yes"
+                  "title": "Let's Encrypt certificate authority",
+                  "description": "Provisions a Let's Encrypt certificate authority."
                 }
               ],
               "diagrams": [
@@ -155,7 +155,7 @@
             "dependencies": [
               {
                 "name": "deploy-arch-ibm-secrets-manager",
-                "description":"Configures secrets manager instance for the public certificates engine to be provisioned in.",
+                "description":"Configures Secrets Manager instance for the public certificates engine to be provisioned in.",
                 "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
                 "version": "v2.4.0",
                 "flavors": [
