@@ -4,7 +4,7 @@ offerings:
   - name: deploy-arch-secrets-manager-public-cert-engine
     kind: solution
     catalog_id: 7df1e4ca-d54c-4fd0-82ce-3d13247308cd
-    offering_id:
+    offering_id: 79d8474b-7105-4c36-81d7-989f042bce0e
     variations:
       - name: fully-configurable
         mark_ready: true

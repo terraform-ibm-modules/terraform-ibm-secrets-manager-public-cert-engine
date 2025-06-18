@@ -1,9 +1,9 @@
 # Secrets Manager Public Certificate Engine
 
 This solution supports the following:
-- Provisioning and configuring a secrets manager public certificate DNS provider.
-- Provisioning Secrets Manager Internet Service authorization.
-- Configuring Let's Encrypt certificate authority.
+- Provisioning a Secrets Manager public certificate authority configuration to configure Let's Encrypt as a Certificate Authority (CA).
+- Provisioning a Secrets Manager DNS provider configuration for IBM Cloud Internet Services.
+- Provisioning a Secrets Manager to Cloud Internet Service authorization policy.
 
 ![secrets-manager-public-cert-engine-deployable-architecture](../../reference-architecture/secrets_manager_public_cert_engine.svg)
 

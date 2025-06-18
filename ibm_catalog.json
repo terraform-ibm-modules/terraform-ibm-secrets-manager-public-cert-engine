@@ -157,14 +157,13 @@
                 "name": "deploy-arch-ibm-secrets-manager",
                 "description":"Configures Secrets Manager instance for the public certificates engine to be provisioned in.",
                 "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
-                "version": "v2.4.0",
+                "version": "v2.6.1",
                 "flavors": [
                 "fully-configurable"
                 ],
                 "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
                 "optional": true,
                 "on_by_default": true,
-                "ignore_auto_referencing": ["*"],
                 "input_mapping": [
                   {
                     "dependency_output": "secrets_manager_crn",
