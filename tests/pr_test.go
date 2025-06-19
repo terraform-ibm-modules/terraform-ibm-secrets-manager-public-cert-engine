@@ -22,6 +22,7 @@ const resourceGroup = "geretain-test-sm-pub-cert-eng"
 
 const keyExampleTerraformDir = "examples/api_key_auth"
 const IAMExampleTerraformDir = "examples/iam_auth"
+const fullyConfigurableDir = "solutions/fully-configurable"
 const bestRegionYAMLPath = "../common-dev-assets/common-go-assets/cloudinfo-region-secmgr-prefs.yaml"
 
 // TestMain will be run before any parallel tests, used to read data from yaml for use with tests
@@ -107,5 +108,67 @@ func TestRunUpgradeExample(t *testing.T) {
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 		assert.NotNil(t, output, "Expected some output")
+	}
+}
+
+func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
+	t.Parallel()
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Prefix:  "sm-pbce",
+		TarIncludePatterns: []string{
+			"*.tf",
+			fullyConfigurableDir + "/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		TemplateFolder:         fullyConfigurableDir,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 80,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
+		{Name: "private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
+		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
+		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
+	}
+
+	err := options.RunSchematicTest()
+	assert.Nil(t, err, "This should not have errored")
+}
+
+func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
+	t.Parallel()
+
+	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
+		Testing: t,
+		Prefix:  "sm-pbce-up",
+		TarIncludePatterns: []string{
+			"*.tf",
+			fullyConfigurableDir + "/*.tf",
+		},
+		ResourceGroup:          resourceGroup,
+		TemplateFolder:         fullyConfigurableDir,
+		Tags:                   []string{"test-schematic"},
+		DeleteWorkspaceOnFail:  false,
+		WaitJobCompleteMinutes: 80,
+	})
+
+	options.TerraformVars = []testschematic.TestSchematicTerraformVar{
+		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
+		{Name: "prefix", Value: options.Prefix, DataType: "string"},
+		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
+		{Name: "private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
+		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
+		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
+	}
+
+	err := options.RunSchematicUpgradeTest()
+	if !options.UpgradeTestSkipped {
+		assert.Nil(t, err, "This should not have errored")
 	}
 }
