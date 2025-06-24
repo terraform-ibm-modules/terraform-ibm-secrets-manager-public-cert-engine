@@ -182,7 +182,8 @@
                 "key": "ibmcloud_cis_api_key"
               },
               {
-                "key": "internet_services_crn"
+                "key": "internet_services_crn",
+                "required": true
               },
               {
                 "key": "internet_services_account_id"
