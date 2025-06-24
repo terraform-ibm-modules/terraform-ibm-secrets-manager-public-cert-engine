@@ -46,7 +46,8 @@ variable "ibmcloud_cis_api_key" {
 
 variable "internet_services_crn" {
   type        = string
-  description = "The CRN of the Internet Service instance to authorize Secrets Manager against. For creating a public certificate, as Cloud Internet Service is being used for DNS hence `internet_service_crn` is a required input. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
+  description = "The CRN of the Internet Service instance to authorize Secrets Manager against. For creating a public certificate, if using Cloud Internet Service for DNS then `internet_service_crn` is a required input. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
+  default     = null
 }
 
 variable "internet_services_account_id" {
@@ -63,8 +64,8 @@ variable "internet_service_domain_id" {
 
 variable "dns_config_name" {
   type        = string
-  description = "Name of the DNS config for the public_cert secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
-  default     = "certificate-dns"
+  description = "Name of the DNS config for the public_cert secrets engine. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
+  default     = null
 }
 
 variable "ca_config_name" {
