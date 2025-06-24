@@ -223,20 +223,25 @@
             "dependencies": [
               {
                 "name": "deploy-arch-ibm-secrets-manager",
-                "description":"Configures Secrets Manager instance for the public certificates engine to be provisioned in.",
+                "description": "Create a new Secrets Manager instance.",
                 "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
-                "version": "v2.6.1",
+                "version": "v2.6.3",
                 "flavors": [
-                "fully-configurable"
+                  "fully-configurable"
                 ],
                 "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
                 "optional": true,
                 "on_by_default": true,
                 "input_mapping": [
                   {
-                  "dependency_input": "prefix",
-                  "version_input": "prefix",
-                  "reference_version": true
+                    "dependency_input": "prefix",
+                    "version_input": "prefix",
+                    "reference_version": true
+                  },
+                  {
+                    "dependency_input": "service_plan",
+                    "version_input": "secrets_manager_service_plan",
+                    "reference_version": true
                   },
                   {
                     "dependency_output": "secrets_manager_crn",
@@ -245,7 +250,8 @@
                 ]
               }
             ],
-            "dependency_version_2": true
+            "dependency_version_2": true,
+            "terraform_version": "1.10.5"
           }
         ]
       }
