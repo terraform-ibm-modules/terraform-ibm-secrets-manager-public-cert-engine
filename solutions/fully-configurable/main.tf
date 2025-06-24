@@ -15,7 +15,7 @@ module "secrets_manager_crn_parser" {
 module "secret_crn_parser" {
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.1.0"
-  crn     = var.private_key_secrets_manager_secret_crn
+  crn     = var.acme_letsencrypt_private_key_secrets_manager_secret_crn
 }
 
 locals {
