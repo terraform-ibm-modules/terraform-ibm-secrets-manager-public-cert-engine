@@ -46,8 +46,7 @@ variable "ibmcloud_cis_api_key" {
 
 variable "internet_services_crn" {
   type        = string
-  description = "The CRN of the Internet Service instance to authorize Secrets Manager against. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
-  default     = null
+  description = "The CRN of the Internet Service instance to authorize Secrets Manager against. For creating a public certificate. As Cloud Internet Service is being used for DNS hence `internet_service_crn` is a required input. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
 }
 
 variable "internet_services_account_id" {
