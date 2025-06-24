@@ -240,6 +240,11 @@
                     "reference_version": true
                   },
                   {
+                    "dependency_input": "region",
+                    "version_input": "secrets_manager_region",
+                    "reference_version": true
+                  },
+                  {
                     "dependency_input": "service_plan",
                     "version_input": "secrets_manager_service_plan",
                     "reference_version": true
