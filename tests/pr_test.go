@@ -104,7 +104,7 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing: t,
-		Prefix:  "sm-pbce",
+		Prefix:  "sm-pb",
 		TarIncludePatterns: []string{
 			"*.tf",
 			fullyConfigurableDir + "/*.tf",
@@ -120,7 +120,7 @@ func TestRunSolutionsFullyConfigurableSchematics(t *testing.T) {
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
-		{Name: "private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
+		{Name: "acme_letsencrypt_private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
 		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
 		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
 	}
@@ -134,7 +134,7 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 
 	options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 		Testing: t,
-		Prefix:  "sm-pbce-up",
+		Prefix:  "sm-pb-up",
 		TarIncludePatterns: []string{
 			"*.tf",
 			fullyConfigurableDir + "/*.tf",
@@ -150,7 +150,7 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 		{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
-		{Name: "private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
+		{Name: "acme_letsencrypt_private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
 		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
 		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
 	}
