@@ -64,7 +64,7 @@ variable "internet_service_domain_id" {
 
 variable "dns_config_name" {
   type        = string
-  description = "Name of the DNS config for the public_cert secrets engine. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
+  description = "Name of the DNS config for the public_cert secrets engine. If passing a value for `dns_config_name` a value for `internet_services_crn` is required. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
   default     = null
 }
 
