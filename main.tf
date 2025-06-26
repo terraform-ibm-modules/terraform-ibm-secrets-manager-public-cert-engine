@@ -64,14 +64,14 @@ resource "ibm_sm_public_certificate_configuration_dns_cis" "public_dns_config" {
 
 data "ibm_sm_arbitrary_secret" "ibm_secrets_manager_secret" {
   provider    = ibm.secret-store
-  count       = var.private_key_secrets_manager_instance_guid != null ? 1 : 0
+  count       = var.acme_letsencrypt_private_key == null ? 1 : 0
   region      = var.private_key_secrets_manager_region != null ? var.private_key_secrets_manager_region : var.region
   instance_id = var.private_key_secrets_manager_instance_guid
   secret_id   = var.private_key_secrets_manager_secret_id
 }
 
 locals {
-  acme_letsencrypt_private_key = var.private_key_secrets_manager_instance_guid != null ? data.ibm_sm_arbitrary_secret.ibm_secrets_manager_secret[0].payload : var.acme_letsencrypt_private_key
+  acme_letsencrypt_private_key = var.acme_letsencrypt_private_key == null ? data.ibm_sm_arbitrary_secret.ibm_secrets_manager_secret[0].payload : var.acme_letsencrypt_private_key
 }
 
 # CA config - LetsEncrypt
