@@ -24,8 +24,8 @@ locals {
   existing_secrets_manager_guid   = module.secrets_manager_crn_parser.service_instance
   existing_secrets_manager_region = module.secrets_manager_crn_parser.region
 
-  secret_region = local.parse_acme_lets_encrypt_private_key == 0 ? null : module.secret_crn_parser.region
-  secret_id     = local.parse_acme_lets_encrypt_private_key == 0 ? null : module.secret_crn_parser.resource
+  secret_region = local.parse_acme_lets_encrypt_private_key == 0 ? null : module.secret_crn_parser[0].region
+  secret_id     = local.parse_acme_lets_encrypt_private_key == 0 ? null : module.secret_crn_parser[0].resource
 }
 
 module "secrets_manager_public_cert_engine" {
