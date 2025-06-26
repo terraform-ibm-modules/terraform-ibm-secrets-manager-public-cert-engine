@@ -6,6 +6,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/logger"
+	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
@@ -159,4 +161,33 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 	if !options.UpgradeTestSkipped {
 		assert.Nil(t, err, "This should not have errored")
 	}
+}
+
+func TestPlanValidation(t *testing.T) {
+
+	options := testhelper.TestOptionsDefault(&testhelper.TestOptions{
+		Testing:       t,
+		TerraformDir:  fullyConfigurableDir,
+		Prefix:        "val-plan",
+		ResourceGroup: resourceGroup,
+	})
+	options.TestSetup()
+	options.TerraformOptions.NoColor = true
+	options.TerraformOptions.Logger = logger.Discard
+	options.TerraformOptions.Vars = map[string]interface{}{
+		"prefix":                        options.Prefix,
+		"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
+		"acme_letsencrypt_private_key":  "PRIVATE_KEY_VALUE", // pragma: allowlist secret
+		"skip_iam_authorization_policy": true,
+		"provider_visibility":           "public",
+	}
+
+	// Init
+	_, initErr := terraform.InitE(t, options.TerraformOptions)
+	assert.Nil(t, initErr, "Terraform init should not error")
+
+	// Plan
+	planOutput, planErr := terraform.PlanE(t, options.TerraformOptions)
+	assert.Nil(t, planErr, "Terraform plan should not error")
+	assert.NotNil(t, planOutput, "Expected Terraform plan output")
 }
