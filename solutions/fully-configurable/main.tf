@@ -3,7 +3,8 @@
 ########################################################################################################################
 
 locals {
-  prefix = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
+  prefix                              = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
+  parse_acme_lets_encrypt_private_key = var.acme_letsencrypt_private_key_secrets_manager_secret_crn != null ? 1 : 0
 }
 
 module "secrets_manager_crn_parser" {
@@ -13,6 +14,7 @@ module "secrets_manager_crn_parser" {
 }
 
 module "secret_crn_parser" {
+  count   = local.parse_acme_lets_encrypt_private_key
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.1.0"
   crn     = var.acme_letsencrypt_private_key_secrets_manager_secret_crn
@@ -22,8 +24,8 @@ locals {
   existing_secrets_manager_guid   = module.secrets_manager_crn_parser.service_instance
   existing_secrets_manager_region = module.secrets_manager_crn_parser.region
 
-  secret_region = module.secret_crn_parser.region
-  secret_id     = module.secret_crn_parser.resource
+  secret_region = local.parse_acme_lets_encrypt_private_key == 0 ? null : module.secret_crn_parser[0].region
+  secret_id     = local.parse_acme_lets_encrypt_private_key == 0 ? null : module.secret_crn_parser[0].resource
 }
 
 module "secrets_manager_public_cert_engine" {
