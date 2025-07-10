@@ -26,15 +26,15 @@
         "provider_name": "IBM",
         "features": [
           {
-            "title": "Configures Internet Service DNS",
+            "title": "Internet Service DNS",
             "description": "Configures Internet Service DNS."
           },
           {
-            "title": "Creates Secrets Manager Internet Service authorization",
+            "title": "Secrets Manager Internet Service authorization",
             "description": "Creates authorization between Secrets Manager and Internet Service."
           },
           {
-            "title": "Configures Let's Encrypt certificate authority",
+            "title": "Let's Encrypt certificate authority",
             "description": "Configures Let's Encrypt certificate authority."
           }
         ],
