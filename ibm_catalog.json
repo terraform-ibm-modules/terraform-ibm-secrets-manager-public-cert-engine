@@ -27,15 +27,15 @@
       "provider_name": "IBM",
       "features": [
         {
-          "title": "Configures Internet Service DNS",
+          "title": "Internet Service DNS",
           "description": "Configures Internet Service DNS."
         },
         {
-          "title": "Creates Secrets Manager Internet Service authorization",
+          "title": "Secrets Manager Internet Service authorization",
           "description": "Creates authorization between Secrets Manager and Internet Service."
         },
         {
-          "title": "Configures Let's Encrypt certificate authority",
+          "title": "Let's Encrypt certificate authority",
           "description": "Configures Let's Encrypt certificate authority."
         }
       ],
@@ -50,16 +50,8 @@
             "descriptions": "This architecture supports creating and configuring a Secrets Manager Public Certificates Engine.",
             "features": [
               {
-                "title": "Internet Service DNS",
-                "description": "Configures Internet Service DNS configuration."
-              },
-              {
-                "title": "Authorization between Secrets Manager and Internet Service",
-                "description": "Creates authorization between Secrets Manager and Internet Service."
-              },
-              {
-                "title": "Let's Encrypt certificate authority",
-                "description": "Provisions a Let's Encrypt certificate authority."
+                "title": "",
+                "description": "Configured to use IBM secure by default standards, but can be edited to fit your use case."
               }
             ],
             "diagrams": [
@@ -75,29 +67,96 @@
           },
           "iam_permissions": [
             {
-              "service_name": "iam-access-groups",
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Editor"
-              ]
+              ],
+              "service_name": "iam-access-groups",
+              "notes": "[optional] Required for managing IAM access groups."
             },
             {
-              "service_name": "iam-identity",
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Operator"
-              ]
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Account Management services",
+              "notes": "Administrator access is required for resource group creation and deletion."
             },
             {
-              "service_name": "resource-group",
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Identity and Access enabled services",
+              "notes": "(Optional) Only required if creating context-based restrictions which can be toggled using the `provision_cbr` input."
+            },
+            {
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Viewer"
-              ]
+              ],
+              "service_name": "resource-group",
+              "notes":"Viewer access is required in the resource group you want to provision in."
             },
             {
-              "service_name": "secrets-manager",
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::serviceRole:Administrator",
                 "crn:v1:bluemix:public:iam::::serviceRole:Manager"
-              ]
+              ],
+              "service_name": "secrets-manager",
+              "notes": "[optional] Required for creating a Secrets Manager instance."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "event-notifications",
+              "notes": "[Optional] Required if you are configuring an Event Notifications Instance."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "sysdig-monitor",
+              "notes": "[Optional] Required if you are consuming the Observability deployable architecture which sets up Cloud Monitoring."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "atracker",
+              "notes": "[Optional] Required if you are consuming the Observability deployable architecture and enabled activity tracker."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "cloud-object-storage",
+              "notes": "[Optional] Required if you are consuming the Observability deployable architecture and provision object storage."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "logs",
+              "notes": "[Optional] Required if you are consuming the Observability deployable architecture which sets up Cloud Logs."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "hs-crypto",
+              "notes": "[Optional] Required if you are creating/configuring keys in an existing Hyper Protect Crypto Services (HPCS) instance for encryption."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "kms",
+              "notes": "[Optional] Required if you are creating/configuring Key Protect instance and keys for encryption."
             }
           ],
           "configuration": [
