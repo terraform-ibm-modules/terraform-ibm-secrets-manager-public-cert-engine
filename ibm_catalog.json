@@ -50,16 +50,8 @@
             "descriptions": "This architecture supports creating and configuring a Secrets Manager Public Certificates Engine.",
             "features": [
               {
-                "title": "Internet Service DNS",
-                "description": "Configures Internet Service DNS configuration."
-              },
-              {
-                "title": "Authorization between Secrets Manager and Internet Service",
-                "description": "Creates authorization between Secrets Manager and Internet Service."
-              },
-              {
-                "title": "Let's Encrypt certificate authority",
-                "description": "Provisions a Let's Encrypt certificate authority."
+                "title": "",
+                "description": "Configured to use IBM secure by default standards, but can be edited to fit your use case."
               }
             ],
             "diagrams": [
@@ -83,11 +75,17 @@
             },
             {
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Operator",
                 "crn:v1:bluemix:public:iam::::role:Administrator"
               ],
-              "service_name": "iam-identity",
-              "notes":"[Optional] Required for Cloud automation for account configuration is enabled."
+              "service_name": "All Account Management services",
+              "notes": "Administrator access is required for resource group creation and deletion."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Identity and Access enabled services",
+              "notes": "(Optional) Only required if creating context-based restrictions which can be toggled using the `provision_cbr` input."
             },
             {
               "role_crns": [
@@ -102,7 +100,7 @@
                 "crn:v1:bluemix:public:iam::::serviceRole:Manager"
               ],
               "service_name": "secrets-manager",
-              "notes": "[optional] Required for creating an Secrets Manager instance."
+              "notes": "[optional] Required for creating a Secrets Manager instance."
             },
             {
               "role_crns": [
@@ -119,6 +117,22 @@
               ],
               "service_name": "sysdig-monitor",
               "notes": "[Optional] Required if you are consuming the Observability deployable architecture which sets up Cloud Monitoring."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "atracker",
+              "notes": "[Optional] Required if you are consuming the Observability deployable architecture and enabled activity tracker."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "cloud-object-storage",
+              "notes": "[Optional] Required if you are consuming the Observability deployable architecture and provision object storage."
             },
             {
               "role_crns": [
