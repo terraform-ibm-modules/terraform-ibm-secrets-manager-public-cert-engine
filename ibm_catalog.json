@@ -85,7 +85,7 @@
                 "crn:v1:bluemix:public:iam::::role:Administrator"
               ],
               "service_name": "All Identity and Access enabled services",
-              "notes": "(Optional) Only required if creating context-based restrictions which can be toggled using the `provision_cbr` input."
+              "notes": "[Optional] Only required if creating context-based restrictions which can be toggled using the `provision_cbr` input."
             },
             {
               "role_crns": [
