@@ -100,7 +100,7 @@
                 "crn:v1:bluemix:public:iam::::serviceRole:Manager"
               ],
               "service_name": "secrets-manager",
-              "notes": "[optional] Required for creating a Secrets Manager instance."
+              "notes": "[Optional] Required for creating a Secrets Manager instance."
             },
             {
               "role_crns": [
