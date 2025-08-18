@@ -61,7 +61,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architecture/secrets_manager_public_cert_engine.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture supports creating a Secrets Manager public certificates engine within a Secrets Manager instance, enabling automated provisioning, renewal, and management of publicly trusted TLS/SSL certificates. It integrates with certificate authoritiy Let’s Encrypt and optionally with Cloud Internet Services (CIS) to streamline domain validation and certificate lifecycle management."
+                "description": "This architecture supports creating a Secrets Manager public certificates engine within a Secrets Manager instance, enabling automated provisioning, renewal, and management of publicly trusted TLS/SSL certificates. It integrates with certificate authoritiy Let's Encrypt and optionally with Cloud Internet Services (CIS) to streamline domain validation and certificate lifecycle management."
               }
             ]
           },
