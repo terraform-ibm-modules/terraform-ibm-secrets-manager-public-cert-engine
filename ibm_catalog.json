@@ -301,7 +301,7 @@
           "dependencies": [
             {
               "name": "deploy-arch-ibm-secrets-manager",
-              "description": "Enable this to create a new secrets manager instance.",
+              "description": "Enable to provisions and configures IBM Cloud Secrets Manager for securely storing service credentials.",
               "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
               "version": "v2.6.3",
               "flavors": [
