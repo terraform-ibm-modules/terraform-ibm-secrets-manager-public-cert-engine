@@ -50,7 +50,7 @@
           "architecture": {
             "features": [
               {
-                "title": "",
+                "title": " ",
                 "description": "Configured to use IBM secure by default standards, but can be edited to fit your use case."
               }
             ],
