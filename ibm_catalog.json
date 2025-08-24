@@ -124,7 +124,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "atracker",
-              "notes": "[Optional] Required if you are consuming the Observability deployable architecture and enable Activity Tracker Event Routing."
+              "notes": "[Optional] Required to configure Activity Tracker Event Routing with Cloud automation for Observability."
             },
             {
               "role_crns": [
