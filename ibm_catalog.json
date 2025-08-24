@@ -156,7 +156,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "kms",
-              "notes": "[Optional] Required if you are creating/configuring Key Protect instance and keys for encryption."
+              "notes": "[Optional] Required to deploy Cloud automation for Key Protect in Cloud automation for Observability."
             }
           ],
           "configuration": [
