@@ -21,7 +21,7 @@
         "solution"
       ],
       "short_description": "Creates and configures a Secrets Manager Public Certificates Engine",
-      "long_description": "This deployable architecture is used to configure an Internet Service DNS configuration, establish authorization between Secrets Manager and the Internet Service, and set up Let's Encrypt as the certificate authority. \n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
+      "long_description": "This deployable architecture sets up a Public Certificates Engine in IBM Cloud Secrets Manager. A Public Certificates Engine allows you to automatically provision and manage publicly trusted TLS certificates from Let’s Encrypt. This deployable architecture configures integration between IBM Cloud Secrets Manager, Cloud Internet Services (CIS) for DNS validation, and Let’s Encrypt as the Certificate Authority. It provisions the required authorization policies, DNS configuration, and CA configuration so that applications can obtain and renew public certificates automatically. \n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/blob/main/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/images/secrets_manager_public_cert_engine.svg",
       "provider_name": "IBM",
@@ -61,7 +61,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architecture/deployable-architecture-sm-public-cert-engine.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture supports creating a Secrets Manager Public Certificates engine within a Secrets Manager instance, enabling automated provisioning, renewal, and management of publicly trusted TLS/SSL certificates. It integrates with certificate authoritiy Let's Encrypt and optionally with Cloud Internet Services (CIS) to streamline domain validation and certificate lifecycle management."
+                "description": "This architecture supports creating a Secrets Manager Public Certificates Engine within a Secrets Manager instance. The Secrets Manager Public Certificates Engine enables you to issue and manage publicly trusted TLS/SSL certificates by integrating with external Certificate Authorities such as Let's Encrypt. It supports configuring DNS providers like IBM Cloud Internet Services (CIS) for domain validation, managing CA configurations, and automating the issuance and renewal of public certificates for internet-facing applications and services."
               }
             ]
           },
@@ -96,7 +96,7 @@
             },
             {
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Administrator",
+                "crn:v1:bluemix:public:iam::::role:Editor",
                 "crn:v1:bluemix:public:iam::::serviceRole:Manager"
               ],
               "service_name": "secrets-manager",
