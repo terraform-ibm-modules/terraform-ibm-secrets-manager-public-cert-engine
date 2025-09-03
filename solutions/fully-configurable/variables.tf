@@ -76,7 +76,7 @@ variable "internet_service_domain_id" {
 variable "dns_config_name" {
   type        = string
   description = "Name of the DNS config for the Public Certificates Secrets Engine. If passing a value for `dns_config_name` a value for `internet_services_crn` is required. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
-  default     = "pub-ce-dns"
+  default     = null
 
   validation {
     condition     = var.dns_config_name != null ? var.internet_services_crn != null : true
