@@ -47,6 +47,11 @@ variable "prefix" {
   }
 }
 
+variable "service_endpoints" {
+  type        = string
+  description = "The service endpoint type to communicate with the provided secrets manager instance."
+  default     = "private"
+}
 
 variable "ibmcloud_cis_api_key" {
   type        = string
