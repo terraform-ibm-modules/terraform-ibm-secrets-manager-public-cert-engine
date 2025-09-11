@@ -199,7 +199,7 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 
 	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
 		Testing:       t,
-		Prefix:        "sm-def",
+		Prefix:        "smm-def",
 		ResourceGroup: resourceGroup,
 		QuietMode:     true, // Suppress logs except on failure
 	})
@@ -209,7 +209,7 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		"deploy-arch-secrets-manager-public-cert-engine",
 		"fully-configurable",
 		map[string]interface{}{
-			"prefix":                       "sm-def",
+			"prefix":                       "smm-def",
 			"existing_resource_group_name": resourceGroup,
 			"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
 			"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
@@ -229,15 +229,15 @@ func TestSecretManagerDependencyPermutations(t *testing.T) {
 
 	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
 		Testing: t,
-		Prefix:  "sm-perm",
+		Prefix:  "smm-perm",
 		AddonConfig: cloudinfo.AddonConfig{
 			OfferingName:   "deploy-arch-secrets-manager-public-cert-engine",
 			OfferingFlavor: "fully-configurable",
 			Inputs: map[string]interface{}{
-				"prefix":                        "sm-def",
+				"prefix":                        "smm-def",
 				"existing_resource_group_name": resourceGroup,
 				"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
-				"acme_letsencrypt_private_key":  "PRIVATE_KEY_VALUE", // pragma: allowlist secret
+				"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
 				"skip_iam_authorization_policy": true,
 				"provider_visibility":           "public",
 			},
