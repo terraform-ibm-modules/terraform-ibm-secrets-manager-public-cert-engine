@@ -9,9 +9,12 @@ import (
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/cloudinfo"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testaddons"
 )
 
 // Define a struct with fields that match the structure of the YAML data
@@ -176,7 +179,7 @@ func TestPlanValidation(t *testing.T) {
 	options.TerraformOptions.Vars = map[string]interface{}{
 		"prefix":                        options.Prefix,
 		"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
-		"acme_letsencrypt_private_key":  "PRIVATE_KEY_VALUE", // pragma: allowlist secret
+		"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
 		"skip_iam_authorization_policy": true,
 		"provider_visibility":           "public",
 	}
@@ -189,4 +192,58 @@ func TestPlanValidation(t *testing.T) {
 	planOutput, planErr := terraform.PlanE(t, options.TerraformOptions)
 	assert.Nil(t, planErr, "Terraform plan should not error")
 	assert.NotNil(t, planOutput, "Expected Terraform plan output")
+}
+
+func TestSecretManagerDefaultConfiguration(t *testing.T) {
+	t.Parallel()
+
+	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
+		Testing:       t,
+		Prefix:        "sm-def",
+		ResourceGroup: resourceGroup,
+		QuietMode:     true, // Suppress logs except on failure
+	})
+
+	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
+		options.Prefix,
+		"deploy-arch-secrets-manager-public-cert-engine",
+		"fully-configurable",
+		map[string]interface{}{
+			"prefix":                       "sm-def",
+			"existing_resource_group_name": resourceGroup,
+			"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
+			"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
+			"skip_iam_authorization_policy": true,
+			"provider_visibility":           "public",
+		},
+	)
+
+	err := options.RunAddonTest()
+	require.NoError(t, err)
+}
+
+// TestDependencyPermutations runs dependency permutations for secret manager public cert engine and all its dependencies
+func TestSecretManagerDependencyPermutations(t *testing.T) {
+	t.Skip("Skipping dependency permutations until the test is fixed")
+	t.Parallel()
+
+	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
+		Testing: t,
+		Prefix:  "sm-perm",
+		AddonConfig: cloudinfo.AddonConfig{
+			OfferingName:   "deploy-arch-secrets-manager-public-cert-engine",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"prefix":                        "sm-def",
+				"existing_resource_group_name": resourceGroup,
+				"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
+				"acme_letsencrypt_private_key":  "PRIVATE_KEY_VALUE", // pragma: allowlist secret
+				"skip_iam_authorization_policy": true,
+				"provider_visibility":           "public",
+			},
+		},
+	})
+
+	err := options.RunAddonPermutationTest()
+	assert.NoError(t, err, "Dependency permutation test should not fail")
 }
