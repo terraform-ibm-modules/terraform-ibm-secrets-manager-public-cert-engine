@@ -1,11 +1,9 @@
 // Tests in this file are run in the PR pipeline
 package test
-
 import (
 	"log"
 	"os"
 	"testing"
-
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
