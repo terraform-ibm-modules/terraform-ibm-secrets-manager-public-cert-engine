@@ -69,7 +69,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architecture/secrets_manager_public_cert_engine.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architcture supports creating secrets manager public certificates engine within a secrets manager instance."
+                "description": "This architecture supports creating secrets manager public certificates engine within a secrets manager instance."
               }
             ]
           },

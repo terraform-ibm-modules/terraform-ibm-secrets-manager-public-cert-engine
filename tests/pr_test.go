@@ -1,18 +1,19 @@
 // Tests in this file are run in the PR pipeline
 package test
+
 import (
-	"log"
-	"os"
-	"testing"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/cloudinfo"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testaddons"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
-	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testaddons"
+	"log"
+	"os"
+	"testing"
 )
 
 // Define a struct with fields that match the structure of the YAML data
@@ -175,11 +176,11 @@ func TestPlanValidation(t *testing.T) {
 	options.TerraformOptions.NoColor = true
 	options.TerraformOptions.Logger = logger.Discard
 	options.TerraformOptions.Vars = map[string]interface{}{
-		"prefix":                        options.Prefix,
-		"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
-		"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
-		"skip_iam_authorization_policy": true,
-		"provider_visibility":           "public",
+		"prefix":                       options.Prefix,
+		"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+		"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
+		"skip_iam_authorization_policy":                           true,
+		"provider_visibility":                                     "public",
 	}
 
 	// Init
@@ -209,14 +210,13 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		map[string]interface{}{
 			"prefix":                       "sm-def-test",
 			"existing_resource_group_name": resourceGroup,
-			"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
-			"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
-			"skip_iam_authorization_policy": true,
-			"provider_visibility":           "public",
+			"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+			"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
+			"skip_iam_authorization_policy":                           true,
+			"provider_visibility":                                     "public",
 		},
 	)
 
 	err := options.RunAddonTest()
 	require.NoError(t, err)
 }
-
