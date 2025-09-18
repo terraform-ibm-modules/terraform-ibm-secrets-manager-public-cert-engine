@@ -198,7 +198,7 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 
 	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
 		Testing:       t,
-		Prefix:        "sm-def-test",
+		Prefix:        "sm-test",
 		ResourceGroup: resourceGroup,
 		QuietMode:     true, // Suppress logs except on failure
 	})
@@ -208,7 +208,7 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		"deploy-arch-secrets-manager-public-cert-engine",
 		"fully-configurable",
 		map[string]interface{}{
-			"prefix":                       "sm-def-test",
+			"prefix":                       options.Prefix,
 			"existing_resource_group_name": resourceGroup,
 			"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
 			"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
