@@ -208,12 +208,8 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		"deploy-arch-secrets-manager-public-cert-engine",
 		"fully-configurable",
 		map[string]interface{}{
-			"prefix":                       options.Prefix,
-			"existing_resource_group_name": resourceGroup,
-			"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+			"prefix": options.Prefix,
 			"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
-			"skip_iam_authorization_policy":                           true,
-			"provider_visibility":                                     "public",
 		},
 	)
 
