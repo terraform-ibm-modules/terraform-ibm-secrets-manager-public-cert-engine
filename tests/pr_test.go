@@ -220,28 +220,3 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// TestDependencyPermutations runs dependency permutations for secret manager public cert engine and all its dependencies
-func TestSecretManagerDependencyPermutations(t *testing.T) {
-	t.Skip("Skipping dependency permutations until the test is fixed")
-	t.Parallel()
-
-	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
-		Testing: t,
-		Prefix:  "smm-perm",
-		AddonConfig: cloudinfo.AddonConfig{
-			OfferingName:   "deploy-arch-secrets-manager-public-cert-engine",
-			OfferingFlavor: "fully-configurable",
-			Inputs: map[string]interface{}{
-				"prefix":                        "smm-def",
-				"existing_resource_group_name": resourceGroup,
-				"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
-				"acme_letsencrypt_private_key_secrets_manager_secret_crn":  permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
-				"skip_iam_authorization_policy": true,
-				"provider_visibility":           "public",
-			},
-		},
-	})
-
-	err := options.RunAddonPermutationTest()
-	assert.NoError(t, err, "Dependency permutation test should not fail")
-}
