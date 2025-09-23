@@ -11,10 +11,16 @@ require (
 )
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
+)
+
+require (
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/IBM-Cloud/bluemix-go v0.0.0-20240719075425-078fcb3a55be // indirect
 	github.com/IBM-Cloud/power-go-client v1.12.0 // indirect
 	github.com/IBM/cloud-databases-go-sdk v0.8.0 // indirect
+	github.com/IBM/go-sdk-core v1.1.0
 	github.com/IBM/go-sdk-core/v5 v5.21.0 // indirect
 	github.com/IBM/platform-services-go-sdk v0.86.1 // indirect
 	github.com/IBM/project-go-sdk v0.3.6 // indirect

@@ -2,6 +2,11 @@
 package test
 
 import (
+	"log"
+	"os"
+	"testing"
+
+	"github.com/IBM/go-sdk-core/core"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
@@ -11,9 +16,6 @@ import (
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testaddons"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
-	"log"
-	"os"
-	"testing"
 )
 
 // Define a struct with fields that match the structure of the YAML data
@@ -208,11 +210,21 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		"deploy-arch-secrets-manager-public-cert-engine",
 		"fully-configurable",
 		map[string]interface{}{
-			"prefix":                       options.Prefix,
-			"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+			"prefix": options.Prefix,
 			"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
 		},
 	)
+
+	options.AddonConfig.Dependencies = []cloudinfo.AddonConfig{
+		{
+			OfferingName:   "deploy-arch-ibm-secrets-manager",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+			},
+			Enabled: core.BoolPtr(true),
+		},
+	}
 
 	err := options.RunAddonTest()
 	require.NoError(t, err)
