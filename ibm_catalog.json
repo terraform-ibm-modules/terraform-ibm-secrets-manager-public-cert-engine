@@ -116,7 +116,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "sysdig-monitor",
-              "notes": "[Optional] Required if you are consuming the Observability deployable architecture which sets up Cloud Monitoring."
+              "notes": "[Optional] Required if you are consuming the Cloud Monitoring deployable architecture."
             },
             {
               "role_crns": [
@@ -124,7 +124,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "atracker",
-              "notes": "[Optional] Required to configure Activity Tracker Event Routing with Cloud automation for Observability."
+              "notes": "[Optional] Required if you are configuring Activity Tracker deployable architecture."
             },
             {
               "role_crns": [
@@ -140,7 +140,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "logs",
-              "notes": "[Optional] Required if you are consuming the Observability deployable architecture which sets up Cloud Logs."
+              "notes": "[Optional] Required if you are consuming the Cloud logs deployable architecture."
             },
             {
               "role_crns": [
@@ -308,7 +308,7 @@
           "dependencies": [
             {
               "name": "deploy-arch-ibm-secrets-manager",
-              "description": "Enables provisioning and configuration of IBM Cloud Secrets Manager for securely storing service credentials.",
+              "description": "Enable to provision and configure Secrets Manager.",
               "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
               "version": "v2.8.6",
               "flavors": [
