@@ -199,10 +199,11 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 	t.Parallel()
 
 	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
-		Testing:       t,
-		Prefix:        "pbsme",
-		ResourceGroup: resourceGroup,
-		QuietMode:     false, // Suppress logs except on failure
+		Testing:               t,
+		Prefix:                "pbsme",
+		ResourceGroup:         resourceGroup,
+		OverrideInputMappings: core.BoolPtr(true),
+		QuietMode:             false, // Suppress logs except on failure
 	})
 
 	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
@@ -229,6 +230,21 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 				"secret_groups":                        []string{},
 			},
 			Enabled: core.BoolPtr(true),
+		},
+		// // Disable target / route creation to prevent hitting quota in account
+		{
+			OfferingName:   "deploy-arch-ibm-cloud-monitoring",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"enable_metrics_routing_to_cloud_monitoring": false,
+			},
+		},
+		{
+			OfferingName:   "deploy-arch-ibm-activity-tracker",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"enable_activity_tracker_event_routing_to_cloud_logs": false,
+			},
 		},
 	}
 
