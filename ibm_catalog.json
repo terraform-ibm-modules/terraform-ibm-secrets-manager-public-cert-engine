@@ -27,12 +27,12 @@
       "provider_name": "IBM",
       "features": [
         {
-          "title": "Internet Service DNS",
-          "description": "Configures Internet Service DNS for domain validation when ordering certificates. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=terraform)."
+          "title": "DNS configuration in Internet Services",
+          "description": "Adds DNS configuration in Internet Services for domain validation when ordering certificates. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui)."
         },
         {
           "title": "Service-to-Service Authorization",
-          "description": "Creates authorization between Secrets Manager and Internet Service. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-cis)."
+          "description": "Creates [authorization](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-cis) between the Secrets Manager and Internet Services."
         },
         {
           "title": "Certificate Authority",
@@ -78,14 +78,14 @@
                 "crn:v1:bluemix:public:iam::::role:Administrator"
               ],
               "service_name": "All Account Management services",
-              "notes": "[Optional] Required to deploy Cloud automation for account configuration, which creates foundational IBM Cloud account resources, like IAM settings, trusted profiles, access groups, and resource groups."
+              "notes": "[Optional] Required to create new resource groups when enabling the Account Configuration integration."
             },
             {
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Administrator"
               ],
               "service_name": "All Identity and Access enabled services",
-              "notes": "[Optional] Required to deploy Cloud automation for account configuration, which creates foundational IBM Cloud account resources, like IAM settings, trusted profiles, access groups, and resource group with account settings."
+              "notes": "[Optional] Required to create new resource groups with account settings when enabling the Account Configuration integration."
             },
             {
               "role_crns": [
@@ -100,7 +100,7 @@
                 "crn:v1:bluemix:public:iam::::serviceRole:Manager"
               ],
               "service_name": "secrets-manager",
-              "notes": "Required for creating a Secrets Manager instance to deploy public certificates engine."
+              "notes": "Required to create a Secrets Manager instance."
             },
             {
               "role_crns": [
@@ -108,7 +108,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "event-notifications",
-              "notes": "[Optional] Required for creating an Event Notifications instance."
+              "notes": "[Optional] Required to create an Event Notifications instance."
             },
             {
               "role_crns": [
@@ -116,7 +116,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "sysdig-monitor",
-              "notes": "[Optional] Required if you are consuming the Cloud Monitoring deployable architecture."
+              "notes": "[Optional] Required to create an instance of Cloud Monitoring."
             },
             {
               "role_crns": [
@@ -124,7 +124,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "atracker",
-              "notes": "[Optional] Required if you are configuring Activity Tracker deployable architecture."
+              "notes": "[Optional] Required when enabling the Activity Tracker Event Routing."
             },
             {
               "role_crns": [
@@ -132,7 +132,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "cloud-object-storage",
-              "notes": "[Optional] Required if you are provisioning Object Storage."
+              "notes": "[Optional] Required to create Object Storage instance."
             },
             {
               "role_crns": [
@@ -140,7 +140,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "logs",
-              "notes": "[Optional] Required if you are consuming the Cloud logs deployable architecture."
+              "notes": "[Optional] Required to create an instance of Cloud Logs."
             },
             {
               "role_crns": [
@@ -156,7 +156,7 @@
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
               "service_name": "kms",
-              "notes": "[Optional] Required to deploy Cloud automation for Key Protect."
+              "notes": "[Optional] Required if Key Protect is used for encryption."
             }
           ],
           "configuration": [
@@ -308,7 +308,7 @@
           "dependencies": [
             {
               "name": "deploy-arch-ibm-secrets-manager",
-              "description": "Enable to provision and configure Secrets Manager.",
+              "description": "Configure Secrets Manager to deploy public certificates engine.",
               "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
               "version": "v2.8.6",
               "flavors": [
