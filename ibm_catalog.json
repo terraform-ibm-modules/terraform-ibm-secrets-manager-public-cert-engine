@@ -20,107 +20,148 @@
         "terraform",
         "solution"
       ],
-      "short_description": "Creates and configures a Secrets Manager Public Certificates Engine.",
-      "long_description": "This deployable architecture is used to configure an Internet Service DNS configuration, establish authorization between Secrets Manager and the Internet Service, and set up Let's Encrypt as the certificate authority. This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) asset collection, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [Automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
+      "short_description": "Creates and configures a Secrets Manager public certificates engine",
+      "long_description": "This deployable architecture sets up a public certificates engine in IBM Cloud Secrets Manager, enabling automated provisioning and management of publicly trusted Transport Layer Security (TLS) certificates. These certificates are issued by Let’s Encrypt, a widely trusted Certificate Authority (CA) that helps secure websites and applications with HTTPS. This deployable architecture configures integration between IBM Cloud Secrets Manager, Cloud Internet Services (CIS) for Domain Name System (DNS) validation, and Let’s Encrypt as the Certificate Authority (CA). It provisions the required authorization policies, DNS configuration, and CA configuration so that applications can obtain and renew public certificates automatically.\n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/blob/main/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/images/secrets_manager_public_cert_engine.svg",
       "provider_name": "IBM",
       "features": [
         {
-          "title": "Configures Internet Service DNS",
-          "description": "Configures Internet Service DNS."
+          "title": "DNS configuration in Internet Services",
+          "description": "Adds DNS configuration in Internet Services for domain validation when ordering certificates. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui)."
         },
         {
-          "title": "Creates Secrets Manager Internet Service authorization",
-          "description": "Creates authorization between Secrets Manager and Internet Service."
+          "title": "Service-to-Service Authorization",
+          "description": "Creates [authorization](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-cis) between the Secrets Manager and Internet Services."
         },
         {
-          "title": "Configures Let's Encrypt certificate authority",
-          "description": "Configures Let's Encrypt certificate authority."
+          "title": "Certificate Authority",
+          "description": "Configures Let's Encrypt certificate authority for getting the SSL/TLS certificates approved. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=terraform)."
         }
       ],
-      "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues please open an issue in that repository [https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/issues](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
+      "support_details": "This product is in the community registry, as such support is handled through the [original repo](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine). If you experience issues please open an issue [here](https://github.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/issues). Please note this product is not supported via the IBM Cloud Support Center.",
       "flavors": [
         {
           "label": "Fully configurable",
           "name": "fully-configurable",
+          "index": 1,
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
           "architecture": {
-            "descriptions": "This architecture supports creating and configuring a Secrets Manager Public Certificates Engine.",
             "features": [
               {
-                "title": "Internet Service DNS",
-                "description": "Configures Internet Service DNS configuration."
-              },
-              {
-                "title": "Authorization between Secrets Manager and Internet Service",
-                "description": "Creates authorization between Secrets Manager and Internet Service."
-              },
-              {
-                "title": "Let's Encrypt certificate authority",
-                "description": "Provisions a Let's Encrypt certificate authority."
+                "title": " ",
+                "description": "Configured to use IBM secure-by-default standards, but can be edited to fit your use case."
               }
             ],
             "diagrams": [
               {
                 "diagram": {
                   "caption": "Secrets Manager Public Certificates Engine",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architecture/secrets_manager_public_cert_engine.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architecture/deployable-architecture-sm-public-cert-engine.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "This architecture supports creating secrets manager public certificates engine within a secrets manager instance."
+                "description": "This architecture supports creating a Secrets Manager public certificates engine within a Secrets Manager instance. The Secrets Manager public certificates engine enables you to issue and manage publicly trusted TLS/SSL certificates by integrating with external Certificate Authorities such as Let's Encrypt. It supports configuring DNS providers like IBM Cloud Internet Services (CIS) for domain validation, managing CA configurations, and automating the issuance and renewal of public certificates for internet-facing applications and services."
               }
             ]
           },
           "iam_permissions": [
             {
-              "service_name": "iam-access-groups",
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Editor"
-              ]
+              ],
+              "service_name": "iam-groups",
+              "notes": "[Optional] Required for managing IAM access groups."
             },
             {
-              "service_name": "iam-identity",
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::role:Operator"
-              ]
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Account Management services",
+              "notes": "[Optional] Required to create new resource groups when enabling the Account Configuration integration."
             },
             {
-              "service_name": "resource-group",
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
+              "service_name": "All Identity and Access enabled services",
+              "notes": "[Optional] Required to create new resource groups with account settings when enabling the Account Configuration integration."
+            },
+            {
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Viewer"
-              ]
+              ],
+              "service_name": "Resource group only",
+              "notes": "Viewer access is required in the resource group you want to provision in."
             },
             {
-              "service_name": "secrets-manager",
               "role_crns": [
-                "crn:v1:bluemix:public:iam::::serviceRole:Administrator",
+                "crn:v1:bluemix:public:iam::::role:Editor",
                 "crn:v1:bluemix:public:iam::::serviceRole:Manager"
-              ]
+              ],
+              "service_name": "secrets-manager",
+              "notes": "Required to create a Secrets Manager instance."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "event-notifications",
+              "notes": "[Optional] Required to create an Event Notifications instance."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "sysdig-monitor",
+              "notes": "[Optional] Required to create an instance of Cloud Monitoring."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "atracker",
+              "notes": "[Optional] Required when enabling the Activity Tracker Event Routing."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "cloud-object-storage",
+              "notes": "[Optional] Required to create Object Storage instance."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "logs",
+              "notes": "[Optional] Required to create an instance of Cloud Logs."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "hs-crypto",
+              "notes": "[Optional] Required if Hyper Protect Crypto Service is used for encryption."
+            },
+            {
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
+              "service_name": "kms",
+              "notes": "[Optional] Required if Key Protect is used for encryption."
             }
           ],
           "configuration": [
             {
               "key": "ibmcloud_api_key"
-            },
-            {
-              "key": "provider_visibility",
-              "options": [
-                {
-                  "displayname": "private",
-                  "value": "private"
-                },
-                {
-                  "displayname": "public",
-                  "value": "public"
-                },
-                {
-                  "displayname": "public-and-private",
-                  "value": "public-and-private"
-                }
-              ],
-              "hidden": true
             },
             {
               "key": "existing_secrets_manager_crn",
@@ -135,7 +176,7 @@
               "required": true,
               "virtual": true,
               "default_value": "us-south",
-              "description": "The region to provision a new Secrets Manager instance in.",
+              "description": "The region to provision a Secrets Manager instance.",
               "options": [
                 {
                   "displayname": "Osaka (jp-osa)",
@@ -202,6 +243,10 @@
               "description": "The pricing plan to use when provisioning a Secrets Manager instance. Possible values: `standard`, `trial`. You can create only one Trial instance of Secrets Manager per account. Before you can create a new Trial instance, you must delete the existing Trial instance and its reclamation. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui#upgrade-instance-standard)."
             },
             {
+              "key": "service_endpoints",
+              "hidden": true
+            },
+            {
               "key": "ibmcloud_cis_api_key"
             },
             {
@@ -241,12 +286,30 @@
             },
             {
               "key": "skip_iam_authorization_policy"
+            },
+            {
+              "key": "provider_visibility",
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ],
+              "hidden": true
             }
           ],
           "dependencies": [
             {
               "name": "deploy-arch-ibm-secrets-manager",
-              "description": "Create a new Secrets Manager instance.",
+              "description": "Configure Secrets Manager to deploy public certificates engine.",
               "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
               "version": "v2.10.0",
               "flavors": [
