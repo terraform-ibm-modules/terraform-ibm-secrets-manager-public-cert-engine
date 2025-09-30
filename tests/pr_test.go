@@ -225,9 +225,9 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 			OfferingFlavor: "fully-configurable",
 			Inputs: map[string]interface{}{
 				"existing_secrets_manager_crn":         permanentResources["secretsManagerCRN"],
-				"service_plan":                         "__NULL__",
-				"skip_secrets_manager_iam_auth_policy": true,
-				"secret_groups":                        []string{},
+				"service_plan":                         "__NULL__", // no plan value needed when using existing SM
+				"skip_secrets_manager_iam_auth_policy": true,       // since using an existing Secrets Manager instance, attempting to re-create auth policy can cause conflicts if the policy already exists
+				"secret_groups":                        []string{}, // passing empty array for secret groups as default value is creating general group and it will cause conflicts as we are using an existing SM
 			},
 			Enabled: core.BoolPtr(true),
 		},
