@@ -202,7 +202,7 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		Testing:       t,
 		Prefix:        "pbsme",
 		ResourceGroup: resourceGroup,
-		QuietMode:     true, // Suppress logs except on failure
+		QuietMode:     false, // Suppress logs except on failure
 	})
 
 	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
@@ -212,6 +212,9 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 		map[string]interface{}{
 			"prefix": options.Prefix,
 			"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
+			"secrets_manager_region":                                  "eu-de",
+			"secrets_manager_service_plan":                            "__NULL__",
+			"skip_iam_authorization_policy":                           true,
 		},
 	)
 
@@ -220,7 +223,10 @@ func TestSecretManagerDefaultConfiguration(t *testing.T) {
 			OfferingName:   "deploy-arch-ibm-secrets-manager",
 			OfferingFlavor: "fully-configurable",
 			Inputs: map[string]interface{}{
-				"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+				"existing_secrets_manager_crn":         permanentResources["secretsManagerCRN"],
+				"service_plan":                         "__NULL__",
+				"skip_secrets_manager_iam_auth_policy": true,
+				"secret_groups":                        []string{},
 			},
 			Enabled: core.BoolPtr(true),
 		},
