@@ -155,7 +155,7 @@ func TestRunSolutionsFullyConfigurableUpgradeSchematics(t *testing.T) {
 		{Name: "prefix", Value: options.Prefix, DataType: "string"},
 		{Name: "existing_secrets_manager_crn", Value: permanentResources["secretsManagerCRN"], DataType: "string"},
 		{Name: "acme_letsencrypt_private_key_secrets_manager_secret_crn", Value: permanentResources["acme_letsencrypt_private_key_secret_crn"], DataType: "string"},
-		{Name: "dns_config_name", Value: "cer-dns", DataType: "string"},
+		{Name: "dns_config_name", Value: "cert-dns", DataType: "string"},
 		{Name: "internet_services_crn", Value: permanentResources["cisInstanceId"], DataType: "string"},
 		{Name: "skip_iam_authorization_policy", Value: true, DataType: "bool"}, // A permanent cis-sm auth policy already exists in the account
 	}
