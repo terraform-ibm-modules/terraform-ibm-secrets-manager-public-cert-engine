@@ -6,10 +6,14 @@ import (
 	"os"
 	"testing"
 
+	"github.com/IBM/go-sdk-core/core"
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/cloudinfo"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/common"
+	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testaddons"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testhelper"
 	"github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper/testschematic"
 )
@@ -174,11 +178,11 @@ func TestPlanValidation(t *testing.T) {
 	options.TerraformOptions.NoColor = true
 	options.TerraformOptions.Logger = logger.Discard
 	options.TerraformOptions.Vars = map[string]interface{}{
-		"prefix":                        options.Prefix,
-		"existing_secrets_manager_crn":  permanentResources["secretsManagerCRN"],
-		"acme_letsencrypt_private_key":  "PRIVATE_KEY_VALUE", // pragma: allowlist secret
-		"skip_iam_authorization_policy": true,
-		"provider_visibility":           "public",
+		"prefix":                       options.Prefix,
+		"existing_secrets_manager_crn": permanentResources["secretsManagerCRN"],
+		"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
+		"skip_iam_authorization_policy":                           true,
+		"provider_visibility":                                     "public",
 	}
 
 	// Init
@@ -189,4 +193,61 @@ func TestPlanValidation(t *testing.T) {
 	planOutput, planErr := terraform.PlanE(t, options.TerraformOptions)
 	assert.Nil(t, planErr, "Terraform plan should not error")
 	assert.NotNil(t, planOutput, "Expected Terraform plan output")
+}
+
+func TestSecretManagerDefaultConfiguration(t *testing.T) {
+	t.Parallel()
+
+	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
+		Testing:               t,
+		Prefix:                "pbsme",
+		ResourceGroup:         resourceGroup,
+		OverrideInputMappings: core.BoolPtr(true),
+		QuietMode:             false, // Suppress logs except on failure
+	})
+
+	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
+		options.Prefix,
+		"deploy-arch-secrets-manager-public-cert-engine",
+		"fully-configurable",
+		map[string]interface{}{
+			"prefix": options.Prefix,
+			"acme_letsencrypt_private_key_secrets_manager_secret_crn": permanentResources["acme_letsencrypt_private_key_secret_crn"], // pragma: allowlist secret
+			"secrets_manager_region":                                  "eu-de",
+			"secrets_manager_service_plan":                            "__NULL__",
+			"skip_iam_authorization_policy":                           true,
+		},
+	)
+
+	options.AddonConfig.Dependencies = []cloudinfo.AddonConfig{
+		{
+			OfferingName:   "deploy-arch-ibm-secrets-manager",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"existing_secrets_manager_crn":         permanentResources["secretsManagerCRN"],
+				"service_plan":                         "__NULL__", // no plan value needed when using existing SM
+				"skip_secrets_manager_iam_auth_policy": true,       // since using an existing Secrets Manager instance, attempting to re-create auth policy can cause conflicts if the policy already exists
+				"secret_groups":                        []string{}, // passing empty array for secret groups as default value is creating general group and it will cause conflicts as we are using an existing SM
+			},
+			Enabled: core.BoolPtr(true),
+		},
+		// // Disable target / route creation to prevent hitting quota in account
+		{
+			OfferingName:   "deploy-arch-ibm-cloud-monitoring",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"enable_metrics_routing_to_cloud_monitoring": false,
+			},
+		},
+		{
+			OfferingName:   "deploy-arch-ibm-activity-tracker",
+			OfferingFlavor: "fully-configurable",
+			Inputs: map[string]interface{}{
+				"enable_activity_tracker_event_routing_to_cloud_logs": false,
+			},
+		},
+	}
+
+	err := options.RunAddonTest()
+	require.NoError(t, err)
 }
