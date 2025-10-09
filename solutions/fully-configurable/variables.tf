@@ -20,33 +20,6 @@ variable "existing_secrets_manager_crn" {
   description = "CRN of an existing secrets manager instance to create the secret engine in."
 }
 
-variable "prefix" {
-  type        = string
-  nullable    = true
-  description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and can not contain consecutive hyphens ('--'). Example: prod-us-south. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/prefix.md)."
-
-  validation {
-    # - null and empty string is allowed
-    # - Must not contain consecutive hyphens (--): length(regexall("--", var.prefix)) == 0
-    # - Starts with a lowercase letter: [a-z]
-    # - Contains only lowercase letters (a–z), digits (0–9), and hyphens (-)
-    # - Must not end with a hyphen (-): [a-z0-9]
-    condition = (var.prefix == null || var.prefix == "" ? true :
-      alltrue([
-        can(regex("^[a-z][-a-z0-9]*[a-z0-9]$", var.prefix)),
-        length(regexall("--", var.prefix)) == 0
-      ])
-    )
-    error_message = "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--')."
-  }
-
-  validation {
-    # must not exceed 16 characters in length
-    condition     = var.prefix == null || var.prefix == "" ? true : length(var.prefix) <= 16
-    error_message = "Prefix must not exceed 16 characters."
-  }
-}
-
 variable "service_endpoints" {
   type        = string
   description = "The service endpoint type to communicate with the provided secrets manager instance."

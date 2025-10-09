@@ -168,10 +168,6 @@
               "required": true
             },
             {
-              "key": "prefix",
-              "required": true
-            },
-            {
               "key": "secrets_manager_region",
               "required": true,
               "virtual": true,
