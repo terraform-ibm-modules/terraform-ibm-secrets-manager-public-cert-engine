@@ -91,8 +91,8 @@ variable "dns_config_name" {
 
 variable "ca_config_name" {
   type        = string
-  description = "Name of the CA config for the public certificate secrets engine. If a prefix input variable is specified, it is added to the value in the `<prefix>-value` format. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
-  default     = "cert-auth"
+  description = "Name of the CA config for the public certificate secrets engine. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
+  default     = null
 }
 
 variable "lets_encrypt_environment" {
