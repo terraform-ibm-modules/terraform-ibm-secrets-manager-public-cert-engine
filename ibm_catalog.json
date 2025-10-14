@@ -58,7 +58,7 @@
               {
                 "diagram": {
                   "caption": "Secrets Manager Public Certificates Engine",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architecture/deployable-architecture-sm-public-cert-engine.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-secrets-manager-public-cert-engine/main/reference-architectures/deployable-architecture-sm-public-cert-engine.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture supports creating a Secrets Manager public certificates engine within a Secrets Manager instance. The Secrets Manager public certificates engine enables you to issue and manage publicly trusted TLS/SSL certificates by integrating with external Certificate Authorities such as Let's Encrypt. It supports configuring DNS providers like IBM Cloud Internet Services (CIS) for domain validation, managing CA configurations, and automating the issuance and renewal of public certificates for internet-facing applications and services."
