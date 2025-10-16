@@ -1,7 +1,7 @@
 {
   "ibmcloud_api_key": $VALIDATION_APIKEY,
   "existing_secrets_manager_crn": $SM_CRN,
-  "prefix": $PREFIX,
   "acme_letsencrypt_private_key": $ACME_KEY,
-  "internet_services_crn": $CIS_ID
+  "internet_services_crn": $CIS_ID,
+  "prefix": $PREFIX
 }
