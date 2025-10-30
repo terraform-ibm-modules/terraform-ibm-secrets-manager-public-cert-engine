@@ -17,6 +17,7 @@ variable "provider_visibility" {
 
 variable "existing_secrets_manager_crn" {
   type        = string
+  nullable    = false
   description = "CRN of an existing secrets manager instance to create the secret engine in."
 }
 
