@@ -4,12 +4,12 @@
 
 ##############################################################################
 output "next_steps_text" {
-  value       = "Your Public Certificate Engine is ready."
+  value       = "Your Public Certificates Engine is ready."
   description = "Next steps text"
 }
 
 output "next_step_primary_label" {
-  value       = "Go to Secrets Manager Public Certificates"
+  value       = "Go to Secrets Manager Public Certificate"
   description = "Primary label"
 }
 
