@@ -9,7 +9,7 @@ output "next_steps_text" {
 }
 
 output "next_step_primary_label" {
-  value       = "Go to Secrets Manager Public Certificate"
+  value       = "Go to Secrets Manager Public Certificates"
   description = "Primary label"
 }
 
