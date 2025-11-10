@@ -344,7 +344,7 @@
               "name": "deploy-arch-ibm-secrets-manager",
               "description": "Configure Secrets Manager to deploy public certificates engine.",
               "id": "6d6ebc76-7bbd-42f5-8bc7-78f4fabd5944-global",
-              "version": "v2.11.0",
+              "version": "v2.11.6",
               "flavors": [
                 "fully-configurable"
               ],
@@ -380,7 +380,7 @@
             }
           ],
           "dependency_version_2": true,
-          "terraform_version": "1.10.5",
+          "terraform_version": "1.12.2",
           "ignore_readme": true
         }
       ]
