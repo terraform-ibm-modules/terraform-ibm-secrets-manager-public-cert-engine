@@ -21,7 +21,7 @@ variable "existing_secrets_manager_crn" {
   description = "CRN of an existing secrets manager instance to create the secret engine in."
 
   validation {
-    condition     = can(regex("^crn:(v\\d:(.*:){2}secrets-manager:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.existing_secrets_manager_crn))
+    condition     = can(regex("^crn:v\\d:(.*:){2}secrets-manager:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.existing_secrets_manager_crn))
     error_message = "The value provided for 'existing_secrets_manager_crn' is not valid.'"
   }
 }
