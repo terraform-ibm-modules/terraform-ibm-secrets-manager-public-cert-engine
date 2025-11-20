@@ -148,7 +148,7 @@ variable "acme_letsencrypt_private_key_secrets_manager_secret_crn" {
   }
   validation {
     condition = anytrue([
-      can(regex("^crn:v\\d:(.*:){2}secrets-manager:(.*:)([aos]\\/[0-9a-fA-F]{32):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}:secret:[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$", var.acme_letsencrypt_private_key_secrets_manager_secret_crn)),
+      can(regex("^crn:v\\d:(.*:){2}secrets-manager:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}:secret:[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$", var.acme_letsencrypt_private_key_secrets_manager_secret_crn)),
       var.acme_letsencrypt_private_key_secrets_manager_secret_crn == null,
     ])
     error_message = "The value provided for 'acme_letsencrypt_private_key_secrets_manager_secret_crn' is not valid."
