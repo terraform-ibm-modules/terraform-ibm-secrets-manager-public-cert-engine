@@ -73,7 +73,7 @@ variable "internet_services_crn" {
 
   validation {
     condition = anytrue([
-      can(regex("^crn:(v\\d:(.*:){2}internet-svcs:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.internet_services_crn)),
+      can(regex("^crn:v\\d:(.*:){2}internet-svcs:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.internet_services_crn)),
       var.internet_services_crn == null,
     ])
     error_message = "The value provided for 'internet_services_crn' is not valid."
