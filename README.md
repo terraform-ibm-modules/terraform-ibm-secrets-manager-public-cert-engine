@@ -189,6 +189,7 @@ No modules.
 | <a name="input_ca_config_name"></a> [ca\_config\_name](#input\_ca\_config\_name) | Name of the CA config for the public\_cert secrets engine | `string` | `null` | no |
 | <a name="input_cis_account_id"></a> [cis\_account\_id](#input\_cis\_account\_id) | Account ID of the CIS instance (only needed if different from Secrets Manager account) | `string` | `null` | no |
 | <a name="input_dns_config_name"></a> [dns\_config\_name](#input\_dns\_config\_name) | Name of the DNS config for the public\_cert secrets engine | `string` | `null` | no |
+| <a name="input_endpoint_type"></a> [endpoint\_type](#input\_endpoint\_type) | The endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private` | `string` | `"public"` | no |
 | <a name="input_ibmcloud_cis_api_key"></a> [ibmcloud\_cis\_api\_key](#input\_ibmcloud\_cis\_api\_key) | Optional, when not using IAM authorization, use an API key for CIS DNS configuration | `string` | `null` | no |
 | <a name="input_internet_service_domain_id"></a> [internet\_service\_domain\_id](#input\_internet\_service\_domain\_id) | (optional) Specific domain in the CIS to authorize Secrets Manager access to. | `string` | `null` | no |
 | <a name="input_internet_services_crn"></a> [internet\_services\_crn](#input\_internet\_services\_crn) | CRN of the CIS instance to authorize Secrets Manager against | `string` | `null` | no |
@@ -198,7 +199,6 @@ No modules.
 | <a name="input_private_key_secrets_manager_secret_id"></a> [private\_key\_secrets\_manager\_secret\_id](#input\_private\_key\_secrets\_manager\_secret\_id) | The secret ID of your ACME private key. Required if acme\_letsencrypt\_private\_key is not set. If both are set, this value will be used as the private key. | `string` | `null` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region where resources will be created or fetched from | `string` | `"us-south"` | no |
 | <a name="input_secrets_manager_guid"></a> [secrets\_manager\_guid](#input\_secrets\_manager\_guid) | GUID of secrets manager instance to create the secret engine in | `string` | n/a | yes |
-| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | The service endpoint type to communicate with the provided secrets manager instance. Possible values are `public` or `private` | `string` | `"public"` | no |
 | <a name="input_skip_iam_authorization_policy"></a> [skip\_iam\_authorization\_policy](#input\_skip\_iam\_authorization\_policy) | Set to true to skip the creation of an IAM authorization policy that permits Secrets Manager to create a DNS config in the CIS specified in `internet_services_crn`. WARNING: An authorization policy must exist before a DNS config can be created, OR an API key must be provided in `ibmcloud_cis_api_key` | `bool` | `false` | no |
 
 ### Outputs

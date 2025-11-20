@@ -56,7 +56,7 @@ resource "ibm_sm_public_certificate_configuration_dns_cis" "public_dns_config" {
   count                          = var.dns_config_name != null ? 1 : 0
   instance_id                    = var.secrets_manager_guid
   region                         = var.region
-  endpoint_type                  = var.service_endpoints
+  endpoint_type                  = var.endpoint_type
   name                           = var.dns_config_name
   cloud_internet_services_apikey = var.ibmcloud_cis_api_key
   cloud_internet_services_crn    = var.internet_services_crn
@@ -80,7 +80,7 @@ resource "ibm_sm_public_certificate_configuration_ca_lets_encrypt" "public_ca_co
   count                    = var.ca_config_name != null ? 1 : 0
   instance_id              = var.secrets_manager_guid
   region                   = var.region
-  endpoint_type            = var.service_endpoints
+  endpoint_type            = var.endpoint_type
   name                     = var.ca_config_name
   lets_encrypt_environment = var.lets_encrypt_environment
   lets_encrypt_private_key = local.acme_letsencrypt_private_key
