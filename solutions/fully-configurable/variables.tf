@@ -17,13 +17,19 @@ variable "provider_visibility" {
 
 variable "existing_secrets_manager_crn" {
   type        = string
+  nullable    = false
   description = "CRN of an existing secrets manager instance to create the secret engine in."
+
+  validation {
+    condition     = can(regex("^crn:v\\d:(.*:){2}secrets-manager:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.existing_secrets_manager_crn))
+    error_message = "The value provided for 'existing_secrets_manager_crn' is not valid.'"
+  }
 }
 
 variable "prefix" {
   type        = string
   nullable    = true
-  description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and can not contain consecutive hyphens ('--'). Example: prod-us-south. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/prefix.md)."
+  description = "The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To skip using a prefix, set this value to null or an empty string. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/prefix.md)."
 
   validation {
     # - null and empty string is allowed
@@ -64,6 +70,15 @@ variable "internet_services_crn" {
   type        = string
   description = "The CRN of the Internet Service instance to authorize Secrets Manager against. For creating a public certificate, if using Cloud Internet Service for DNS then `internet_service_crn` is a required input. [Learn more](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-secrets-manager-cli#secrets-manager-configurations-cli)."
   default     = null
+
+  validation {
+    condition = anytrue([
+      can(regex("^crn:v\\d:(.*:){2}internet-svcs:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.internet_services_crn)),
+      var.internet_services_crn == null,
+    ])
+    error_message = "The value provided for 'internet_services_crn' is not valid."
+
+  }
 }
 
 variable "internet_services_account_id" {
@@ -130,5 +145,13 @@ variable "acme_letsencrypt_private_key_secrets_manager_secret_crn" {
       var.acme_letsencrypt_private_key != null
     )
     error_message = "If `acme_letsencrypt_private_key` is not set, you must provide a value for `acme_letsencrypt_private_key_secrets_manager_secret_crn`."
+  }
+  validation {
+    condition = anytrue([
+      can(regex("^crn:v\\d:(.*:){2}secrets-manager:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}:secret:[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$", var.acme_letsencrypt_private_key_secrets_manager_secret_crn)),
+      var.acme_letsencrypt_private_key_secrets_manager_secret_crn == null,
+    ])
+    error_message = "The value provided for 'acme_letsencrypt_private_key_secrets_manager_secret_crn' is not valid."
+
   }
 }
