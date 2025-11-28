@@ -65,7 +65,7 @@ module "public_secret_engine" {
   private_key_secrets_manager_instance_guid = var.private_key_secrets_manager_instance_guid
   private_key_secrets_manager_secret_id     = var.private_key_secrets_manager_secret_id
   private_key_secrets_manager_region        = var.private_key_secrets_manager_region
-  service_endpoints                         = "private"
+  endpoint_type                             = "private"
 }
 
 # TODO: Uncomment the following block once the certificate module is published

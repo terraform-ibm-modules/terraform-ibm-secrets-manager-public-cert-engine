@@ -44,7 +44,7 @@ module "secrets_manager_public_cert_engine" {
   ca_config_name                            = var.ca_config_name == null ? null : "${local.prefix}${var.ca_config_name}"
   lets_encrypt_environment                  = var.lets_encrypt_environment
   acme_letsencrypt_private_key              = var.acme_letsencrypt_private_key
-  service_endpoints                         = var.service_endpoints
+  endpoint_type                             = var.endpoint_type
   skip_iam_authorization_policy             = var.skip_iam_authorization_policy
   private_key_secrets_manager_instance_guid = local.existing_secrets_manager_guid
   private_key_secrets_manager_secret_id     = local.secret_id
