@@ -73,7 +73,7 @@ module "public_secret_engine" {
 
 module "secrets_manager_public_certificate" {
   source     = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
-  version    = "1.4.0"
+  version    = "1.5.0"
   depends_on = [module.public_secret_engine]
 
   cert_common_name      = local.cert_common_name
@@ -87,5 +87,5 @@ module "secrets_manager_public_certificate" {
   secrets_manager_guid   = local.sm_guid
   secrets_manager_region = local.sm_region
 
-  service_endpoints = "private"
+  endpoint_type = "private"
 }
