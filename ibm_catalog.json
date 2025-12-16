@@ -51,6 +51,7 @@
           "index": 1,
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
+          "short_description": "Ideal for users looking to automate ordering, managing, and rotating domain-validated (DV) SSL/TLS certificates from third-party Certificate Authorities (CAs) directly within Secrets Manager.",
           "architecture": {
             "features": [
               {
