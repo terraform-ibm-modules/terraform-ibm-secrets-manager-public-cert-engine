@@ -9,14 +9,14 @@ locals {
 
 module "secrets_manager_crn_parser" {
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.3.6"
+  version = "1.3.7"
   crn     = var.existing_secrets_manager_crn
 }
 
 module "secret_crn_parser" {
   count   = local.parse_acme_lets_encrypt_private_key
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.3.6"
+  version = "1.3.7"
   crn     = var.acme_letsencrypt_private_key_secrets_manager_secret_crn
 }
 
