@@ -36,7 +36,7 @@ module "secrets_manager" {
 # Best practise, use the secrets manager secret group module to create a secret group
 module "secrets_manager_secret_group" {
   source                   = "terraform-ibm-modules/secrets-manager-secret-group/ibm"
-  version                  = "1.3.34"
+  version                  = "1.3.35"
   region                   = local.sm_region
   secrets_manager_guid     = local.sm_guid
   secret_group_name        = "${var.prefix}-certificates-secret-group"   #checkov:skip=CKV_SECRET_6: does not require high entropy string as is static value
@@ -73,7 +73,7 @@ module "public_secret_engine" {
 
 module "secrets_manager_public_certificate" {
   source     = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
-  version    = "1.5.21"
+  version    = "1.5.22"
   depends_on = [module.public_secret_engine]
 
   cert_common_name      = local.cert_common_name
