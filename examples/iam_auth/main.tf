@@ -13,7 +13,7 @@ module "resource_group" {
 
 module "secrets_manager" {
   source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "2.12.13"
+  version              = "2.12.14"
   resource_group_id    = module.resource_group.resource_group_id
   region               = var.region
   secrets_manager_name = "${var.prefix}-secrets-manager" #tfsec:ignore:general-secrets-no-plaintext-exposure
@@ -54,7 +54,7 @@ module "public_secret_engine" {
 
 module "secrets_manager_public_certificate" {
   source     = "terraform-ibm-modules/secrets-manager-public-cert/ibm"
-  version    = "1.5.24"
+  version    = "1.5.25"
   depends_on = [module.public_secret_engine]
 
   cert_common_name      = local.cert_common_name
