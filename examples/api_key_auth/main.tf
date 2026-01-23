@@ -16,14 +16,14 @@ module "resource_group" {
 module "existing_sm_crn_parser" {
   count   = var.existing_sm_instance_crn == null ? 0 : 1
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.3.7"
+  version = "1.4.1"
   crn     = var.existing_sm_instance_crn
 }
 
 module "secrets_manager" {
   count                = var.existing_sm_instance_crn == null ? 1 : 0
   source               = "terraform-ibm-modules/secrets-manager/ibm"
-  version              = "2.12.18"
+  version              = "2.12.21"
   resource_group_id    = module.resource_group.resource_group_id
   region               = var.region
   secrets_manager_name = "${var.prefix}-secrets-manager" #tfsec:ignore:general-secrets-no-plaintext-exposure
