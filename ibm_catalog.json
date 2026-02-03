@@ -158,6 +158,17 @@
             {
               "key": "existing_secrets_manager_crn",
               "required": true,
+              "display_name": "existing_secrets_manager_instance",
+              "custom_config": {
+                "type": "platform_resource",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "resourceType": "secrets-manager",
+                  "selection": "single_select",
+                  "valueType": "crn"
+                }
+              },
               "value_constraints": [
                 {
                   "type": "regex",
@@ -241,6 +252,17 @@
             },
             {
               "key": "internet_services_crn",
+              "display_name": "existing_internet_services",
+              "custom_config": {
+                "type": "platform_resource",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "resourceType": "internet-svcs",
+                  "selection": "single_select",
+                  "valueType": "crn"
+                }
+              },
               "value_constraints": [
                 {
                   "type": "regex",
