@@ -62,7 +62,7 @@ variable "acme_letsencrypt_private_key" {
 variable "dns_provider_name" {
   type        = string
   description = "Name of the DNS provider for the public_cert secrets engine"
-  default     = "certificate-dns"
+  default     = "cert-dns"
 }
 
 variable "cert_common_name" {

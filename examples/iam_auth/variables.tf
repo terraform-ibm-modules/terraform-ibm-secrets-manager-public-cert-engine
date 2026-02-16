@@ -43,7 +43,7 @@ variable "resource_tags" {
 variable "ca_name" {
   type        = string
   description = "Secret Managers certificate authority name"
-  default     = "cert-auth"
+  default     = "certificate-auth"
 }
 
 variable "acme_letsencrypt_private_key" {
