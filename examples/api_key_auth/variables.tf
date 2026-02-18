@@ -14,7 +14,7 @@ variable "ibmcloud_secret_store_api_key" {
 variable "prefix" {
   type        = string
   description = "Prefix for sm instance"
-  default     = "sm-test"
+  default     = "api-test"
 }
 
 variable "region" {
