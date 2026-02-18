@@ -14,7 +14,7 @@ variable "ibmcloud_secret_store_api_key" {
 variable "prefix" {
   type        = string
   description = "Prefix for sm instance"
-  default     = "secrets-manager-test"
+  default     = "sm-test"
 }
 
 variable "region" {
@@ -43,7 +43,7 @@ variable "resource_tags" {
 variable "ca_name" {
   type        = string
   description = "Secret Managers certificate authority name"
-  default     = "certificate-auth"
+  default     = "cert-auth"
 }
 
 variable "acme_letsencrypt_private_key" {
@@ -56,7 +56,7 @@ variable "acme_letsencrypt_private_key" {
 variable "dns_provider_name" {
   type        = string
   description = "Name of the DNS provider for the public_cert secrets engine"
-  default     = "certificate-dns"
+  default     = "cert-dns"
 }
 
 variable "cert_common_name" {
