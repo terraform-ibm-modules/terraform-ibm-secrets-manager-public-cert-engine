@@ -62,8 +62,8 @@ module "secrets_manager_public_certificate" {
   cert_name             = "${var.prefix}-public-cert"
   cert_secrets_group_id = module.secrets_manager_secret_group.secret_group_id
 
-  secrets_manager_ca_name           = var.ca_name
-  secrets_manager_dns_provider_name = var.dns_provider_name
+  secrets_manager_ca_name           = "${var.prefix}-${var.ca_name}"
+  secrets_manager_dns_provider_name = "${var.prefix}-${var.dns_provider_name}"
 
   secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
   secrets_manager_region = var.region

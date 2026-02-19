@@ -59,8 +59,8 @@ module "public_secret_engine" {
   region                                    = local.sm_region
   ibmcloud_cis_api_key                      = var.ibmcloud_api_key # key with manager authorization to CIS
   internet_services_crn                     = var.cis_id
-  dns_config_name                           = var.dns_provider_name
-  ca_config_name                            = var.ca_name
+  dns_config_name                           = "${var.prefix}-${var.dns_provider_name}"
+  ca_config_name                            = "${var.prefix}-${var.ca_name}"
   acme_letsencrypt_private_key              = var.acme_letsencrypt_private_key
   private_key_secrets_manager_instance_guid = var.private_key_secrets_manager_instance_guid
   private_key_secrets_manager_secret_id     = var.private_key_secrets_manager_secret_id
