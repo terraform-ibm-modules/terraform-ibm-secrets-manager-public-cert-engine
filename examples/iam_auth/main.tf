@@ -44,8 +44,8 @@ module "public_secret_engine" {
   secrets_manager_guid                      = module.secrets_manager.secrets_manager_guid
   region                                    = var.region
   internet_services_crn                     = var.cis_id
-  dns_config_name                           = var.dns_provider_name
-  ca_config_name                            = var.ca_name
+  dns_config_name                           = "${var.prefix}-${var.dns_provider_name}"
+  ca_config_name                            = "${var.prefix}-${var.ca_name}"
   acme_letsencrypt_private_key              = var.acme_letsencrypt_private_key
   private_key_secrets_manager_instance_guid = var.private_key_secrets_manager_instance_guid
   private_key_secrets_manager_secret_id     = var.private_key_secrets_manager_secret_id
@@ -62,8 +62,8 @@ module "secrets_manager_public_certificate" {
   cert_name             = "${var.prefix}-public-cert"
   cert_secrets_group_id = module.secrets_manager_secret_group.secret_group_id
 
-  secrets_manager_ca_name           = var.ca_name
-  secrets_manager_dns_provider_name = var.dns_provider_name
+  secrets_manager_ca_name           = "${var.prefix}-${var.ca_name}"
+  secrets_manager_dns_provider_name = "${var.prefix}-${var.dns_provider_name}"
 
   secrets_manager_guid   = module.secrets_manager.secrets_manager_guid
   secrets_manager_region = var.region
