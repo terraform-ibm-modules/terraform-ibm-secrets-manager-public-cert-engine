@@ -2,6 +2,7 @@
 package test
 
 import (
+	"context"
 	"log"
 	"os"
 	"testing"
@@ -186,11 +187,11 @@ func TestPlanValidation(t *testing.T) {
 	}
 
 	// Init
-	_, initErr := terraform.InitE(t, options.TerraformOptions)
+	_, initErr := terraform.InitContextE(t, context.Background(), options.TerraformOptions)
 	assert.Nil(t, initErr, "Terraform init should not error")
 
 	// Plan
-	planOutput, planErr := terraform.PlanE(t, options.TerraformOptions)
+	planOutput, planErr := terraform.PlanContextE(t, context.Background(), options.TerraformOptions)
 	assert.Nil(t, planErr, "Terraform plan should not error")
 	assert.NotNil(t, planOutput, "Expected Terraform plan output")
 }
