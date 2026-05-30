@@ -16,7 +16,7 @@ module "resource_group" {
 module "existing_sm_crn_parser" {
   count   = var.existing_sm_instance_crn == null ? 0 : 1
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.6.0"
+  version = "1.6.1"
   crn     = var.existing_sm_instance_crn
 }
 
