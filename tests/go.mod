@@ -5,11 +5,11 @@ go 1.26.1
 require (
 	github.com/gruntwork-io/terratest v1.0.1
 	github.com/stretchr/testify v1.11.1
-	github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper v1.77.1
+	github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper v1.77.3
 )
 
 require (
-	github.com/IBM/networking-go-sdk v0.53.5 // indirect
+	github.com/IBM/networking-go-sdk v0.53.6 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
@@ -23,7 +23,7 @@ require (
 	github.com/IBM-Cloud/power-go-client v1.16.2 // indirect
 	github.com/IBM/cloud-databases-go-sdk v0.8.1 // indirect
 	github.com/IBM/go-sdk-core/v5 v5.23.2
-	github.com/IBM/platform-services-go-sdk v0.101.0 // indirect
+	github.com/IBM/platform-services-go-sdk v0.102.0 // indirect
 	github.com/IBM/project-go-sdk v0.4.0 // indirect
 	github.com/IBM/schematics-go-sdk v0.4.0 // indirect
 	github.com/IBM/vpc-go-sdk v1.0.2 // indirect
