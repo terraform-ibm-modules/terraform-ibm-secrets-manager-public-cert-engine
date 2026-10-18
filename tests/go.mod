@@ -5,11 +5,11 @@ go 1.26.1
 require (
 	github.com/gruntwork-io/terratest v1.0.1
 	github.com/stretchr/testify v1.12.1
-	github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper v1.80.4
+	github.com/terraform-ibm-modules/ibmcloud-terratest-wrapper v1.80.5
 )
 
 require (
-	github.com/IBM/networking-go-sdk v0.55.2 // indirect
+	github.com/IBM/networking-go-sdk v0.55.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/oklog/ulid/v2 v2.1.2 // indirect
